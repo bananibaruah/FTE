@@ -13,25 +13,69 @@ $Pincode = $_POST["Pincode"];
 $City = $_POST["City"];
 $state = $_POST["state"];
 $grade = $_POST["grade"];
+
 $ctc = $_POST["ctc"];
+
 $basic = $_POST["basic"];
-$hra = $_POST["hra"];
 $basic1 = round($basic / 12);
+
+$hra = $_POST["hra"];
 $hra1 = round($hra / 12);
-$Statutory_Bonus = $_POST['Statutory_Bonus'];
-$Statutory_Bonus1 = round($Statutory_Bonus / 12);
+
 $Conveyance_Allowance = $_POST['Conveyance_Allowance'];
 $Conveyance_Allowance1 = round($Conveyance_Allowance / 12);
+
+$Statutory_Bonus = $_POST['Statutory_Bonus'];
+$Statutory_Bonus1 = round($Statutory_Bonus / 12);
+
+$lta = $_POST['lta'];
+$lta1 = round($lta / 12);
+
 $Executive_Allowance = $_POST['Executive_Allowance'];
 $Executive_Allowance1 = round($Executive_Allowance / 12);
+
+$Food_Allowance = $_POST['Food_Allowance'];
+$Food_Allowance1 = round($Food_Allowance / 12);
+
+$m_c_r = $_POST['m_c_r'];
+$m_c_r1 = round($m_c_r / 12);
+
+$Attire_Allowance = $_POST['Attire_Allowance'];
+$Attire_Allowance1 = round($Attire_Allowance / 12);
+
+$vr = $_POST['vr'];
+$vr1 = round($vr / 12);
+
+$dr = $_POST['dr'];
+$dr1 = round($dr / 12);
+
+$Retention_Allowance = $_POST['Retention_Allowance'];
+$Retention_Allowance1 = round($Retention_Allowance / 12);
+
 $Total_A = $_POST['Total_A'];
 $Total_A1 = round($Total_A / 12);
+
 $PF = $_POST['PF'];
 $PF1 = round($PF / 12);
+
+$Gratuity = $_POST['Gratuity'];
+$Gratuity1 = round($Gratuity / 12);
+
 $Total_B = $_POST['Total_B'];
 $Total_B1 = round($Total_B / 12);
-$TOTAL = $_POST['TOTAL'];
-$TOTAL1 = round($TOTAL / 12);
+
+$LTOTAL = $_POST['LTOTAL'];
+$LTOTAL1 = round($LTOTAL / 12);
+
+$Variable_Pay = $_POST['Variable_Pay'];
+$Variable_Pay1 = round($Variable_Pay / 12);
+
+$Total_II = $_POST['Total_II'];
+$Total_II1 = round($Total_II / 12);
+
+$Total = $_POST['Total'];
+$Total1 = round($Total / 12);
+
 $Code = $_POST['Code'];
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 $pdf->SetCreator(PDF_CREATOR);
@@ -310,19 +354,19 @@ $name<br>
 <table cellspacing="0" cellpadding="1" border="1" style="border-color:gray width:100% height:100%;">
    <tr style="background-color:white;color:black;">
         <td><b>Name</b></td>
-        <td><b></b></td>
+        <td><b>$name</b></td>
         <td><b>Location</b></td>
-		<td><b></b></td>
+		<td><b>$Ad3</b></td>
     </tr>
     <tr>
         <td><b>Designation</b></td>
-        <td><b></b></td>
+        <td><b>$Position</b></td>
         <td><b>Grade</b></td>
-		<td><b></b></td>
+		<td><b>$grade</b></td>
     </tr>
 	<tr>
-        <td><b>wef</b></td>
-        <td><b></b></td>
+        <td><b>wef</b></b></td>
+        <td>$Sd</td>
 		<td><b>All Figures in INR</b></td>
 		<td><b></b></td>
     </tr>
@@ -347,50 +391,50 @@ $name<br>
     <tr>
         <td><b></b></td>
         <td>Basic</td>
-		<td></td>
-		<td></td>
+		<td>$basic1</td>
+		<td>$basic</td>
     </tr>
     <tr>
         <td><b></b></td>
         <td>HRA</td>
-        <td></td>
-        <td></td>
+        <td>$hra1</td>
+        <td>$hra</td>
     </tr>
     <tr>
         <td><b></b></td>
         <td>Conveyance Allowance</td>
-		<td></td>
-		<td></td>
+		<td>$ca1</td>
+		<td>$ca</td>
     </tr>
     <tr>
         <td><b></b></td>
         <td>Statutory Bonus</td>
-		<td></td>
-		<td></td>
+		<td>$Statutory_Bonus1</td>
+		<td>$Statutory_Bonus</td>
     </tr>
     <tr>
         <td><b></b></td>
         <td>LTA</td>
-		<td></td>
-		<td></td>
+		<td>$lta1</td>
+		<td>$lta</td>
     </tr>
     <tr>
         <td><b></b></td>
         <td>Executive Allowance</td>
-		<td></td>
-		<td></td>
+		<td>$Executive_Allowance1</td>
+		<td>$Executive_Allowance</td>
     </tr>
     <tr>
         <td><b></b></td>
         <td>Mobile Charges Reimbursement</td>
-		<td></td>
-		<td></td>
+		<td>$m_c_r1</td>
+		<td>$m_c_r</td>
     </tr>
     <tr>
         <td><b></b></td>
         <td><b>Total A</b></td>
-		<td><b></b></td>
-		<td><b></b></td>
+		<td><b>$Total_A1</b></td>
+		<td><b>$Total_A</b></td>
     </tr>
     <tr>
         <td><b>B</b></td>
@@ -401,26 +445,26 @@ $name<br>
     <tr>
         <td><b></b></td>
         <td>Employer Contribution to Provident Fund </td>
-		<td></td>
-		<td></td>
+		<td>$PF1</td>
+		<td>$PF</td>
     </tr>
     <tr>
         <td><b></b></td>
         <td>Gratuity</td>
-        <td></td>
-        <td></td>
+        <td>$Gratuity1</td>
+        <td>$Gratuity</td>
     </tr>
     <tr>
         <td><b></b></td>
         <td><b>Total B</b></td>
-		<td><b></b></td>
-		<td><b></b></td>
+		<td><b>$Total_B1</b></td>
+		<td><b>$Total_B</b></td>
     </tr>
     <tr>
         <td><b></b></td>
         <td><b>Total of PART I (A+B)</b>  </td>
-		<td><b></b></td>
-		<td><b></b></td>
+		<td><b>$LTotal1</b></td>
+		<td><b>$LTotal</b></td>
     </tr>
     <tr>
         <td><b>PART II</b></td>
@@ -431,20 +475,20 @@ $name<br>
     <tr>
         <td><b></b></td>
         <td><>Variable Pay *</td>
-		<td><b></b></td>
-		<td><b></b></td>
+		<td><b>$Variable_Pay1</b></td>
+		<td><b>$Variable_Pay</b></td>
     </tr>
     <tr>
         <td><b></b></td>
         <td><b>Total of PART II</b>  </td>
-		<td><b></b></td>
-		<td><b></b></td>
+		<td><b>$Total_II1</b></td>
+		<td><b>$Total_II</b></td>
     </tr>
     <tr>
         <td><b></b></td>
         <td><b> Cost to Company (PART I + PART II)</b>  </td>
-		<td><b></b></td>
-		<td><b></b></td>
+		<td><b>$Total1</b></td>
+		<td><b>$Total</b></td>
     </tr>
 
     <tr>
