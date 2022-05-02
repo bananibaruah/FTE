@@ -35,7 +35,7 @@ $Food_Allowance1 = round($Food_Allowance / 12);
 $m_c_r = $_POST['m_c_r'];
 $m_c_r1 = round($m_c_r / 12);
 $Attire_Allowance = $_POST['Attire_Allowance'];
-$Attire_ALlowance1 = round($Attire_Allowance / 12);
+$Attire_Allowance1 = round($Attire_Allowance / 12);
 $vr = $_POST['vr'];
 $vr1 = round($vr / 12);
 $driver_reimbursement = $_POST['driver_reimbursement'];
@@ -75,7 +75,9 @@ $pdf->SetFont('times', '', 10.8);
 $pdf->SetMargins(10, 10, 15, true);
 $pdf->AddPage();
 $pdf->SetAutoPageBreak(TRUE, 30);
+$doj1 = date("M-d-Y", strtotime($doj));
 
+echo $doj1;
 
 // Extend the TCPDF class to create custom Header and Footer
 class MYPDF extends TCPDF
@@ -185,20 +187,18 @@ $html .= <<<EOD
 <b>OFFER LETTER </b>
 
 <b>
-<br><br>$Sd
+<br><br>$doj1
 <h3>$Code</h3><br><br>
 $name <br>
 $Ad1 ,<br>
-$Ad2 ,<br><br>
-$City  $Pincode <br>
-$state <br><br>
-
+$Ad2 ,<br>
+$City  $Pincode <br><br>
 Dear $name , <br><br>
 </b>
-Further to our discussions we are pleased to offer you the role of <b>$Position</b>. The detailed terms and conditions of your offer have been set out in Annexures I and II and are enclosed herewith.<br><br>
+Further to our discussions we are pleased to offer you the role of "<b>$Position</b>". The detailed terms and conditions of your offer have been set out in Annexures I and II and are enclosed herewith.<br><br>
 Please take the time to read and understand the offer details. Should you have any queries on the terms please contact your Talent Acquisition representative. <br><br>
 You are requested to give us your e-mail confirmation of having accepted the terms and conditions of our offer letter within 2 days of our e-mail, followed by sending us a duly signed copy of the same in token of your acceptance of the said offer letter no later than 10 days from the date of issue of this letter, failing which this offer stands withdrawn. <br><br>
-You are required to report for duty on <b>$doj</b> not later than 9.30 a.m.  If you do not join by this date then this offer would automatically stand withdrawn, unless the date of joining is revised and is communicated to you in writing.<br><br>       																							         
+You are required to report for duty on <b>$doj1</b> not later than 9.30 a.m.  If you do not join by this date then this offer would automatically stand withdrawn, unless the date of joining is revised and is communicated to you in writing.<br><br>       																							         
 Note: This offer made to you is on the basis of the details declared by you in the Employment Application Form (EAF). In case of any discrepancies found in the EAF the said offer will stand null and void with immediate effect.<br><br>
 Ashwini Patange we look forward to you joining NSEIT for a mutually rewarding association.<br><br>
 Yours sincerely,<br>
@@ -208,7 +208,7 @@ Head – HR<br><br>
 Encl:-</b><br>
 &nbsp;&nbsp;&nbsp;1.	Offer details<br>
 &nbsp;&nbsp;&nbsp;2.	Annexure I and II.<br><br>
-We request you to return all the documents attached duly signed and join us on or before <b>$doj</b>.<br><br><br><brr>
+We request you to return all the documents attached duly signed and join us on or before <b>$doj1</b>.<br><br><br><brr>
 <b><u>Signature & Date</u></b>
 <P style="page-break-before: always">
 EOD;
@@ -217,23 +217,22 @@ $html .= <<<EOD
 &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-<b>OFFER LETTER OFFICE COPY</b>
+<b>OFFER LETTER OOFICE COPY</b>
 
 <b>
-<br><br><Dear>$Sd
+<br><br>$doj1
 <h3>$Code</h3><br><br>
 $name <br>
 $Ad1 ,<br>
-$Ad2 ,<br><br>
-$City  $Pincode <br>
-$state <br><br>
+$Ad2 ,<br>
+$City  $Pincode <br><br>
 
 Dear $name , <br><br>
 </b>
-Further to our discussions we are pleased to offer you the role of <b>"$position”</b>. The detailed terms and conditions of your offer have been set out in Annexures I and II and are enclosed herewith.<br><br>
+Further to our discussions we are pleased to offer you the role of <b>$Position</b>. The detailed terms and conditions of your offer have been set out in Annexures I and II and are enclosed herewith.<br><br>
 Please take the time to read and understand the offer details. Should you have any queries on the terms please contact your Talent Acquisition representative. <br><br>
 You are requested to give us your e-mail confirmation of having accepted the terms and conditions of our offer letter within 2 days of our e-mail, followed by sending us a duly signed copy of the same in token of your acceptance of the said offer letter no later than 10 days from the date of issue of this letter, failing which this offer stands withdrawn. <br><br>
-You are required to report for duty on <b>$doj</b> not later than 9.30 a.m.  If you do not join by this date then this offer would automatically stand withdrawn, unless the date of joining is revised and is communicated to you in writing.<br><br>       																							         
+You are required to report for duty on <b>$doj1</b> not later than 9.30 a.m.  If you do not join by this date then this offer would automatically stand withdrawn, unless the date of joining is revised and is communicated to you in writing.<br><br>       																							         
 Note: This offer made to you is on the basis of the details declared by you in the Employment Application Form (EAF). In case of any discrepancies found in the EAF the said offer will stand null and void with immediate effect.<br><br>
 Ashwini Patange we look forward to you joining NSEIT for a mutually rewarding association.<br><br>
 Yours sincerely,<br>
@@ -243,7 +242,7 @@ Head – HR<br><br>
 Encl:-</b><br>
 &nbsp;&nbsp;&nbsp;1.	Offer details<br>
 &nbsp;&nbsp;&nbsp;2.	Annexure I and II.<br><br>
-We request you to return all the documents attached duly signed and join us on or before <b>$doj</b><br><br><br><brr>
+We request you to return all the documents attached duly signed and join us on or before <b>$doj1</b>.<br><br><br><brr>
 <b><u>Signature & Date</u></b>
 <P style="page-break-before: always">
 EOD;
@@ -253,16 +252,16 @@ $html .= <<<EOD
 &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
-<b>OFFER DETAILS</b><br>
+<b><u>OFFER DETAILS</u></b><br>
 
 
 <br>$name<br><br><br>
 <b>Place of Work:</b><br><br>
 The initial place of work for carrying out your assignment shall be as given below: <br><br>
-Posting Location: Mumbai  <br>
-Base Location: Mumbai<br>
-Area of Operation: NA<br>
-Note: NA <br>
+<b>Posting Location:</b> $City  <br>
+<b>Base Location:</b> $City <br>
+<b>Area of Operation:</b> NA<br>
+<b>Note: NA <br></b><br>
 
 
 Your working days will be <b>Monday to Friday</b>.<br><br>
@@ -280,28 +279,38 @@ Your appointment will be subject to your being found medically fit for service i
 At the time of reporting for duty the documents as per Annexure II should be submitted. Original documents must be produced for verification purposes and the same will be returned to you after completion of the verification process. The Company reserves the right to revoke the offer or appointment if any discrepancy is found in your documents. If any statement, documentation, declaration or information given by you at any time, is found to be fraudulent / false or if any material / particular is suppressed / misinformed, your services are liable to be terminated forthwith without any notice or compensation in lieu thereof.<br>
 Your appointment will be subject to your furnishing such information as the Company may require from time to time and subject to your services being acceptable in the light of the information furnished.<br><br>
 
-<b>6Background Verification:</b><br><br>
+<b>Background Verification:</b><br><br>
 Background Verification:The Company reserves the right to carry out reference verifications or background checks (not restricted to the last salary drawn, past employment, use of banned / illegal drugs / narcotic substances, criminal records etc.) prior to your joining the Company or during the course of your employment with the Company. You understand and acknowledge that this is a requirement and you have no objections whatsoever if such checks are carried out by the company or a third party agency engaged by the company. <br><br>
-<br><br><br>
-&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; 
-&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;<b><u>Initials</u></b>
-
-<br><br><br><br><br><br><br>
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;<b>_________________</b><br>
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;<b>Initials</b>
+<br>
 EOD;
 
 $html .= <<<EOD
-&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
-<b>Notice Period / Termination:</b><br>
+<br><br>
+<br>$name<br><br>
+<b>Notice Period / Termination:</b><br><br>
 
 
-<br>$name<br><br><br>
+
 a.	Either party can terminate the contract of employment by giving 90 (Ninety) days notice in writing (subject further that such requirement shall extend to you during the tenure of probation period as well) subject to the Company’s right to pay salary in lieu thereof to you. The Company may also waive the requirement of serving notice period by you, either in full or part, solely at its own discretion and recover salary in lieu of notice period (pro rata if applicable) from you. However, should you sign any Service Agreement / undertaking with the company as a part of your employment process or later during the course of your employment with the company, you will then not be allowed to terminate your employment with the company unless you comply with the terms and conditions of the Service Agreement / Undertaking. <br><br>
 
 b.	It will be mandatory for you to serve the full notice period without taking any leave to help with complete hand over of all your responsibilities to an identified person. Any exceptions to this will be allowed only on 
@@ -316,59 +325,72 @@ e.	Your services are liable to be terminated forthwith without any notice or com
 
 f.	Salary in all the above cases refers to Basic Salary.  <br><br>
 <br><br><br>
-&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; 
-&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;<b><u>Initials</u></b>
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;<b>_________________</b><br>
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;<b>Initials</b>
 
-<br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br>
 
 EOD;
 
 
 $html .= <<<EOD
-<br><br>&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+$name<br>
+&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
 <b>ANNEXURE-I</b><br>
 
-
-$name<br>
-&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<b><u>COMPENSATION DETAILS</u></b><br><br>
-<br><br>
 <table cellspacing="0" cellpadding="1" border="1" style="border-color:gray width:100% height:100%;">
    <tr style="background-color:white;color:black;">
-        <td><b>FTE Name</b></td>
+        <td style= "width:15%;"><b></b></td>
+        <td style= "width:45%;"><b><center>ANNEXURE I</center></b></td>
+        <td style= "width:20%;"><b>Location</b></td>
+		<td style= "width:20%;"><b>$City</b></td>
+    </tr>
+    <tr>
+        <td><b>Name</b></td>
         <td><b>$name</b></td>
-        <td><b>Location</b></td>
-		<td><b>$City</b></td>
+        <td><b></b></td>
+        <td><b></b></td>
     </tr>
     <tr>
         <td><b>Designation</b></td>
         <td><b>$Position</b></td>
-        <td><b></b></td>
-		<td><b></b></td>
+        <td><b>Grade</b></td>
+		<td><b>$grade</b></td>
     </tr>
 	<tr>
         <td><b>wef</b></td>
         <td><b>$Sd</b></td>
-		<td><b>Grade</b></td>
-		<td><b>$grade</b></td>
+		<td><b>All Figures in INR</b></td>
+		<td><b></b></td>
     </tr>
 	<tr>
         <td><b></b></td>
-        <td><b>Compensation Head</b></td>
+        <td><b></b></td>
 		<td><b>Monthly</b></td>
 		<td><b>Annual</b></td>
     </tr>
     <tr>
-        <td><b>Part I</b></td>
+        <td><b>PART I</b></td>
         <td><b>Fixed Components</b></td>
         <td><b></b></td>
 		<td><b></b></td>
@@ -405,9 +427,15 @@ $name<br>
     </tr>
     <tr>
         <td><b></b></td>
-        <td>Statutory Bonus</td>
+        <td>LTA</td>
 		<td>$lta1</td>
 		<td>$lta</td>
+    </tr>
+    <tr>
+    <td><b></b></td>
+        <td>Executive Allowance</td>
+        <td>$Executive_Allowance1</td>
+        <td>$Executive_Allowance</td>
     </tr>
     <tr>
         <td><b></b></td>
@@ -417,7 +445,7 @@ $name<br>
     </tr>
     <tr>
         <td><b></b></td>
-        <td>EMobile Reimbursement Charges</td>
+        <td>Mobile Reimbursement Charges</td>
 		<td>$m_c_r1</td>
 		<td>$m_c_r</td>
     </tr>
@@ -435,7 +463,7 @@ $name<br>
     </tr>
     <tr>
         <td><b></b></td>
-        <td>Driver_reimbursement</td>
+        <td>Driver Reimbursement</td>
 		<td>$driver_reimbursement1</td>
 		<td>$driver_reimbursement</td>
     </tr>
@@ -471,7 +499,7 @@ $name<br>
     </tr>
     <tr>
         <td><b></b></td>
-        <td>GRATUITY </td>
+        <td>Gratuity</td>
 		<td>$gratuity1</td>
 		<td>$gratuity</td>
     </tr>
@@ -515,13 +543,18 @@ $name<br>
         <td colspan="4"><b>Please note: </b></td>
     </tr>
     <tr>
-        <td colspan="4">
-        Please note:<br>
-        The company provides the following benefits for their FTE's, the premium for which is directly paid by the company:<br>
-        * Personal Accident Policy for the FTE's.<br>
-        * Incase of any amendment in compliance law, the company reserves right to restructure the salary components keeping the CTC  intact adhering to compliance<br>
+        <td colspan="4">1. All Allowances / Bonuses / Incentives / Rewards / Benefits will be paid / reimbursed as per the Company policy. Employees who are on the rolls of the organization on the day of disbursement will be eligible for the same. <br>2. All employees are requested to keep themselves updated with changes announced in policies and procedures on the HRMS. <br> 3. Payment of Gratuity will be in accordance with the Gratuity Act, 1972.<br>4. Incase of any amendment in compliance law, the company reserves right to restructure the salary components keeping the CTC intact adhering to compliance
         </td>
-        
+    </tr>
+    <tr>
+        <td colspan="4">* Currently paid bi-annually in April and October every year s.t. performance and you being confirmed on rolls of organization.
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4"><b>In addition to the above: </b><br>The company provides the following benefits for their employees, the premium for which is directly paid by the company:<br>
+        a. Mediclaim for employees and their eligible dependents (as defined by the company).<br>
+        b. Personal Accident Policy for the employees        
+        </td>
     </tr>
 </table>
 <P style="page-break-before: always"><br>
@@ -570,13 +603,28 @@ $html .= <<<EOD
 <b>•	You are requested to note that the processing of the salary will be subject to the submission of the PAN details. In case you do not have a PAN number please initiate the application process for the same immediately and carry the acknowledgement as issued by the Income Tax authorities with you on the day of joining. A copy of this acknowledgement would need to be submitted for our records, in the interim period, till you receive the PAN card.</b><br><br><br><br>
 
 
-<br><br><br>
-&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; 
-&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;<b><u>Initials</u></b>
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;<b>_________________</b><br>
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;<b>Initials</b>
+
+<br>
 EOD;
 
 

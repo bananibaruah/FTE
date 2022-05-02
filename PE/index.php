@@ -82,11 +82,9 @@
                                 if (sbb > state_val) {
                                     total_state = (sbb);
                                     $('#Statutory_Bonus').val(total_state * 12);
-
                                 } else {
                                     total_state = state_val;
                                     $('#Statutory_Bonus').val(total_state * 12);
-                                    alert(total_state);
                                 }
                             } else {
                                 alert(data);
@@ -356,12 +354,12 @@
                                                             placeholder="CTC" />
                                                         <br>
 
-                                                        <label=""><b>State</b></label>
+                                                        <label=""><b>GRADE</b></label>
 
-                                                            <select id="state" name="state" class="custom-select">
-                                                                <option selected>Select State</option>
+                                                            <select id="grade" name="grade" class="custom-select">
+                                                                <option selected>Select Grade</option>
                                                                 <?php
-$g_sql = "SELECT DISTINCT COL_1 FROm stat";
+$g_sql = "SELECT DISTINCT COL_1 FROm lta_list";
 $g_result = $link->query($g_sql);
 if ($g_result->num_rows > 0) {
     while ($g_row = $g_result->fetch_assoc()) {
@@ -371,22 +369,18 @@ if ($g_result->num_rows > 0) {
 
 ?>
                                                             </select>
-                                                            <br>
-                                                            <br>
+                                                            <br><br>
 
-                                                            <label=""><b>VARIABLE
-                                                                    PAY
-                                                                    PERCENATGE<small id="al2" style="display:none;"
-                                                                        class="badge badge-danger">
-                                                                        ( Enter %
+                                                            <label=""><b>BASIC PERCENTAGE <small id="al1"
+                                                                        style="display:none;"
+                                                                        class="badge badge-danger"> (
+                                                                        Enter %
                                                                         between 5
                                                                         to 50 )
                                                                     </small></b></label>
-                                                                <input type="number" class="form-control" id="vpp1"
-                                                                    name="vpp1" placeholder="VARIABLE PAY" />
-
+                                                                <input type="number" class="form-control" id="basicp"
+                                                                    name="basicp" placeholder="basicp" />
                                                                 <br>
-
 
                                                                 <label="">BASIC</label>
                                                                     <input type="text" class="form-control" id="basic"
@@ -585,13 +579,26 @@ if ($g_result->num_rows > 0) {
                                                         <input type="text" class="form-control" id="oldctc"
                                                             name="oldctc" placeholder="OLD CTC" />
                                                         <br>
+                                                        <label=""><b>VARIABLE
+                                                                PAY
+                                                                PERCENATGE<small id="al2" style="display:none;"
+                                                                    class="badge badge-danger">
+                                                                    ( Enter %
+                                                                    between 5
+                                                                    to 50 )
+                                                                </small></b></label>
+                                                            <input type="number" class="form-control" id="vpp1"
+                                                                name="vpp1" placeholder="VARIABLE PAY" />
 
-                                                        <label=""><b>GRADE</b></label>
 
-                                                            <select id="grade" name="grade" class="custom-select">
-                                                                <option selected>Select Grade</option>
-                                                                <?php
-$g_sql = "SELECT DISTINCT COL_1 FROm lta_list";
+
+                                                            <br>
+                                                            <label=""><b>State</b></label>
+
+                                                                <select id="state" name="state" class="custom-select">
+                                                                    <option selected>Select State</option>
+                                                                    <?php
+$g_sql = "SELECT DISTINCT COL_1 FROm stat";
 $g_result = $link->query($g_sql);
 if ($g_result->num_rows > 0) {
     while ($g_row = $g_result->fetch_assoc()) {
@@ -600,20 +607,10 @@ if ($g_result->num_rows > 0) {
 }
 
 ?>
-                                                            </select>
-                                                            <br>
-                                                            <br>
+                                                                </select>
+                                                                <br><br>
 
-                                                            <label=""><b>BASIC PERCENTAGE <small id="al1"
-                                                                        style="display:none;"
-                                                                        class="badge badge-danger"> (
-                                                                        Enter %
-                                                                        between 5
-                                                                        to 50 )
-                                                                    </small></b></label>
-                                                                <input type="number" class="form-control" id="basicp"
-                                                                    name="basicp" placeholder="basicp" />
-                                                                <br>
+
 
                                                                 <label="">HRA</label>
                                                                     <input type="text" class="form-control" id="hra"
