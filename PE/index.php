@@ -13,28 +13,12 @@
     <script src="js/popper.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-    <script>
-    function calhra() {
 
-        console.log("hi");
-
-        var basic = document.getElementById("basic").value;
-        var basicint = parseInt(basic, 10);
-
-        var hra = document.getElementById("hra").value;
-        var hraint = parseInt(hra, 10);
-
-        hraint = basicint / 2;
-        console.log("hraint", hraint);
-        document.getElementById('hra').value = hraint;
-
-
-
-    }
-    </script>
     <script>
     $(document).ready(function() {
         var y = 0;
+        var y1 = 0;
+        var hr1 = 0;
         var hr = 0;
         var ca = 0;
         var sb = 0;
@@ -60,15 +44,30 @@
             ttwo = 0,
             total1 = 0,
             total2 = 0,
+            sbb = 0,
             hike = 0,
             total_grade = 0,
             incentive, gross,
             total_state = 0,
+            lta1 = 0,
+            aa1 = 0,
+            vr1 = 0,
+            mcr1 = 0,
+            dr1 = 0,
             old_check = 0;
         oc1 = 0;
+        ctotal = 0;
+        var w = 0;
+        var w1 = 0;
+        var tb3 = 0;
+
+
         $("#state").on("change", function() {
             var state = $("#state").val();
             var ctc = $("#ctc").val();
+            var state_val = 0;
+            var sbb = 0;
+            total_state = 0;
             if (ctc != "") {
                 $.ajax({
                     type: "POST",
@@ -76,15 +75,22 @@
                     data: "a=" + state,
                     success: function(data) {
                         if (data != "not found") {
-                            if (y >= 21000) {
-                                $('#Statutory_Bonus').val('0');
-                                total_state = 0;
+                            state_val = parseInt(data);
+                            if (y < 21000) {
+                                sbb = Math.round(y * (20 / 100));
+
+                                if (sbb > state_val) {
+                                    total_state = (sbb);
+                                    $('#Statutory_Bonus').val(total_state * 12);
+
+                                } else {
+                                    total_state = state_val;
+                                    $('#Statutory_Bonus').val(total_state * 12);
+                                    alert(total_state);
+                                }
                             } else {
-                                $('#Statutory_Bonus').val(data);
-                                total_state = data;
+                                alert(data);
                             }
-                        } else {
-                            alert(data);
                         }
                     },
                 });
@@ -103,12 +109,18 @@
                     if (data != "not found") {
                         //lta
                         const str = data.split("_");
-                        $('#lta').val(str[0]);
-                        $('#vr').val(str[1]);
-                        $('#Food_Allowance').val(str[2]);
-                        $('#m_c_r').val(str[3]);
-                        $('#Attire_Allowance').val(str[4]);
-                        $('#dr').val(str[5]);
+                        $('#lta').val(str[0] * 12);
+
+                        $('#vr').val(str[1] * 12);
+
+                        $('#Food_Allowance').val(str[2] * 12);
+
+                        $('#m_c_r').val(str[3] * 12);
+
+                        $('#Attire_Allowance').val(str[4] * 12);
+
+                        $('#driver_reimbursement').val(str[5] * 12);
+
                         total_grade = Math.round(parseInt(str[0]) +
                             parseInt(str[1]) +
                             parseInt(str[2]) +
@@ -116,7 +128,6 @@
                             parseInt(str[4]) +
                             parseInt(str[5])
                         );
-                        //alert(str[0]);
 
                     } else {
                         alert(data);
@@ -130,20 +141,21 @@
         $("#vpp1").on("keyup", function() {
             var z = $("#vpp1").val();
             var ctc = $("#ctc").val();
-            var w = 0;
+            var wf = 0;
             if (ctc != "") {
                 if (z >= 5 && z <= 50) {
                     $("#al2").css('display', 'none');
-                    w = (ctc * (z / 100));
-                    $('#Variable_Pay').val(w);
-                    $('#Total_II').val(w);
-                    Incentive = Math.round(ctc * z / 100);
+                    w1 = ctc * (z / 100);
+                    w = w1 / 12;
+                    wf = w * 12;
+                    $('#Variable_Pay').val(wf);
+                    $('#Total_II').val(wf);
 
                 } else {
-                    //alert('enter value between 5 to 50 ');
                     $("#Variable_Pay").val('0');
                     $('#Total_II').val('0');
                     $("#al2").css('display', 'inline-block');
+
                 }
 
             } else {
@@ -155,82 +167,113 @@
             oc1 = $("#oldctc").val();
             var ctc = $("#ctc").val();
             hike = Math.round((ctc / oc1 - 1) * 100);
-            old_check = oc1 * 1.8;
-            if (hike >= 81) {
-                ra = Math.round(ctc - old_check);
+            old_check = (oc1 * 1.8);
+            if (hike <= 81) {
+                ra = (ctc - old_check) / 12;
             } else {
                 ra = 0;
             }
-            //alert(hike);
 
         });
         $("#basicp").on("keyup", function() {
             var x = $("#basicp").val();
-            var ctc = $("#ctc").val();
-            oc1 = $("#oldctc").val();
+            var ctc = $("#ctc").val(); //ctc
+            oc1 = $("#oldctc").val(); //old ctc
             if (ctc != "") {
                 if (x >= 5 && x <= 50) {
                     $("#al1").css('display', 'none');
-                    y = Math.round((ctc * (x / 100)));
-                    hr = Math.round(y / 2);
-                    ca = Math.round(1600 * 12);
+                    y = (ctc * (x / 100)) / 12;
 
-                    gross = ctc / 12;
+                    hr = y / 2;
 
-                    ta1 = Math.round(y + hr + ca + total_grade + total_state); // total half part
-                    if (y <= 15000) {
-                        $("#PF").val('1800');
-                        pf = 1800;
+                    ca = 1600;
+
+                    ta1 = y + hr + ca + total_state + total_grade;
+
+                    var y_12 = y / 12;
+                    var total_y_12 = 0;
+                    var pf = 0;
+                    var pf1 = 0;
+                    if (y_12 <= 15000) {
+                        total_y_12 = y_12 * (12 / 100);
+                        pf = total_y_12 * 12;
+                        pf1 = pf * 12;
+                        $("#PF").val(pf1);
+
                     } else {
-                        pf = Math.round((12 / 100) * y);
-                        $("#PF").val(pf);
+                        y_12 = ta1 - hr;
+                        if (y_12 > 15000) {
+                            y_12 = 1800;
+                            total_y_12 = y_12 * 12;
+                            pf = total_y_12 * 12;
+                            pf1 = pf * 12;
+                            $("#PF").val(pf1);
+                        } else {
+                            total_y_12 = y_12 * (12 / 100);
+                            pf = total_y_12 * 12;
+                            pf1 = pf * 12;
+                            $("#PF").val(pf1);
+
+
+                        }
+
                     }
-                    gt = Math.round(y / 12);
-                    //gt = (g / 12);
 
-                    tg = (gross + incentive + y + hr + ra + pf + gt)
+                    gt = (y / 12);
 
-                    tb1 = pf + gt;
-                    total1 = (ta1 + tb1);
-                    //alert(total1);
-                    e = ctc - total1;
-                    //alert(e);
-                    ta2 = (ta1 + e);
-                    esic = Math.round(ta1 / 12);
-                    if (esic >= 21000) {
-                        $("#ESIC").val('0');
+                    var e_12 = 0;
+                    var esic = 0;
+                    var total_esic = 0;
+                    var e_12 = ta1 / 12;
+                    esic = e_12;
+                    if (esic < 21000) {
                         total_esic = 0;
+                        $("#ESIC").val(total_esic);
                     } else {
-                        total_esic = Math.round(ta2 - ca * (3.25 / 100));
+                        total_esic = e_121 - ca * (3.25 / 100) * 12;
                         $("#ESIC").val(total_esic);
                     }
-                    tb2 = (tb1 + total_esic);
-                    total2 = ta2 + tb2;
+
+                    tb1 = pf + gt + total_esic;
+
+
+                    valtab = 0;
+                    valtab1 = 0;
+                    valtab = w + ta1 + tb1;
+                    valtab1 = valtab * 12;
+
+
+                    e1 = ctc - valtab1;
+                    e = Math.round(e1 / 12); //monthly e
+
+                    ta2 = Math.round(ta1 + e);
+
+                    tb2 = Math.round(tb1);
+
+                    total2 = Math.round(ta2 + tb2);
+
+                    ctotal = Math.round(w + total2);
 
 
 
-                    // ot = (ta + tb);
-                    // e = (ctc - ot);
-                    // fta = (ot + e);
-                    // tab = (fta + tb);
-                    // ttwo = (ttwo);
-                    // total = (tab + ttwo);
-                    $("#basic").val(y);
-                    $("#hra").val(hr);
-                    $("#Conveyance_Allowance").val(ca);
-                    $("#Statutory_Bonus").val(total_state);
-                    $("#gratuity").val(Math.round(gt));
-                    $("#Total_B").val(tb2);
-                    $("#Executive_Allowance").val(e);
-                    $("#Retention_Allowance").val(ra);
-                    $("#Total_A").val(ta2);
-                    $("#LTotal").val(total2);
+                    $("#basic").val(y * 12);
+                    $("#hra").val(hr * 12);
+                    $("#Conveyance_Allowance")
+                        .val(ca * 12);
+                    $("#Statutory_Bonus").val(total_state * 12);
+                    $("#gratuity")
+                        .val(Math.round(gt * 12));
+                    $("#Total_B").val(tb2 * 12);
+                    $(
+                        "#Executive_Allowance").val(e * 12);
+                    $("#Retention_Allowance").val(ra *
+                        12);
+                    $("#Total_A").val(ta2 * 12);
+                    $("#LTotal").val(total2 * 12);
+                    $("#TOTAL").val(ctotal * 12);
 
-                    // $("#Total_II").val(ttwo);
-                    // $("#Total").val(total);
 
                 } else {
-                    //alert('enter value between 5 to 50 ');
                     $("#basic").val('0');
                     $("#al1").css('display', 'inline-block');
                 }
@@ -242,8 +285,7 @@
         $("#ctc").on("keyup", function() {
             var ctc = $("#ctc").val();
 
-            // y = (40 / 100) * ctc;
-            // $("#basic").val(y);
+
 
 
         });
@@ -286,33 +328,39 @@
                     <br />
                     <div class="green box">
                         <div class="row">
-                            <div class="col-lg-12">
-                                <!-- <label=""><b>CODE</b></label>
-                                    <input type="text" class="form-control" id="Code" name="Code" placeholder="Code" />
-                                    <br> -->
-                            </div>
+
                             <div class="col-lg-6">
                                 <label=""><b>CODE</b></label>
                                     <input type="text" class="form-control" id="Code" name="Code" placeholder="Code" />
                                     <br>
-
-                                    <label="">Name</label>
-                                        <input type="text" class="form-control" id="name" name="name"
-                                            placeholder="Name" />
+                                    <label="">Address Line 1</label>
+                                        <input type="text" class="form-control" id="Ad1" name="Ad1"
+                                            placeholder="Address Line 1" />
                                         <br>
-                                        <label="">Address Line2</label>
-                                            <input type="text" class="form-control" id="Ad2" name="Ad2"
-                                                placeholder="Address Line 2" />
+                                        <label="">Address Line 3</label>
+                                            <input type="text" class="form-control" id="Ad3" name="Ad3"
+                                                placeholder="Address Line 3" />
                                             <br>
-                                            <label="">City</label>
-                                                <input type="text" class="form-control" id="City" name="City"
-                                                    placeholder="City" />
+                                            <label="">Pincode</label>
+                                                <input type="text" class="form-control" id="Pincode" name="Pincode"
+                                                    placeholder="Pincode" />
                                                 <br>
-                                                <label=""><b>State</b></label>
+                                                <label="">Start Date</label>
+                                                    <input type="date" class="form-control" id="Sd" name="Sd"
+                                                        placeholder="Start Date" />
+                                                    <br>
 
-                                                    <select id="state" name="state" class="custom-select">
-                                                        <option selected>Select State</option>
-                                                        <?php
+
+                                                    <label=""><b>TARGETED CTC</b></label>
+                                                        <input type="text" class="form-control" id="ctc" name="ctc"
+                                                            placeholder="CTC" />
+                                                        <br>
+
+                                                        <label=""><b>State</b></label>
+
+                                                            <select id="state" name="state" class="custom-select">
+                                                                <option selected>Select State</option>
+                                                                <?php
 $g_sql = "SELECT DISTINCT COL_1 FROm stat";
 $g_result = $link->query($g_sql);
 if ($g_result->num_rows > 0) {
@@ -322,309 +370,177 @@ if ($g_result->num_rows > 0) {
 }
 
 ?>
-                                                    </select>
-                                                    <br>
-                                                    <br>
-
-                                                    <label="">End Date</label>
-                                                        <input type="date" class="form-control" id="ed" name="ed"
-                                                            placeholder="End Date" />
-                                                        <br>
-                                                        <label="">DOJ</label>
-                                                            <input type="date" class="form-control" id="doj" name="doj"
-                                                                placeholder="DOJ" />
+                                                            </select>
                                                             <br>
-                                                            <label=""><b>OLD CTC</b></label>
-                                                                <input type="text" class="form-control" id="oldctc"
-                                                                    name="oldctc" placeholder="OLD CTC" />
+                                                            <br>
+
+                                                            <label=""><b>VARIABLE
+                                                                    PAY
+                                                                    PERCENATGE<small id="al2" style="display:none;"
+                                                                        class="badge badge-danger">
+                                                                        ( Enter %
+                                                                        between 5
+                                                                        to 50 )
+                                                                    </small></b></label>
+                                                                <input type="number" class="form-control" id="vpp1"
+                                                                    name="vpp1" placeholder="VARIABLE PAY" />
+
                                                                 <br>
-                                                                <label=""><b>BASIC PERCENTAGE <small id="al1"
-                                                                            style="display:none;"
-                                                                            class="badge badge-danger"> ( Enter %
-                                                                            between 5
-                                                                            to 50 )
-                                                                        </small></b></label>
-                                                                    <input type="number" class="form-control"
-                                                                        id="basicp" name="basicp"
-                                                                        placeholder="basicp" />
+
+
+                                                                <label="">BASIC</label>
+                                                                    <input type="text" class="form-control" id="basic"
+                                                                        name="basic" placeholder="basic" readonly />
                                                                     <br>
-                                                                    <label="">BASIC</label>
+
+
+
+
+                                                                    <label="">CONVEYANCE ALLOWANCE</label>
                                                                         <input type="text" class="form-control"
-                                                                            id="basic" name="basic" placeholder="basic"
-                                                                            readonly />
+                                                                            id="Conveyance_Allowance"
+                                                                            name="Conveyance_Allowance"
+                                                                            placeholder="Conveyance_Allowance" />
                                                                         <br>
 
-
-                                                                        <label="">HRA</label>
+                                                                        <label="">LTA</label>
                                                                             <input type="text" class="form-control"
-                                                                                id="hra" name="hra" placeholder="hra"
-                                                                                onfocus="calhra()" />
+                                                                                id="lta" name="lta" placeholder="LTA" />
                                                                             <br>
 
 
-                                                                            <label="">CONVEYANCE ALLOWANCE</label>
+
+                                                                            <label="">FOOD
+                                                                                ALLOWANCE</label>
                                                                                 <input type="text" class="form-control"
-                                                                                    id="Conveyance_Allowance"
-                                                                                    name="Conveyance_Allowance"
-                                                                                    placeholder="Conveyance_Allowance" />
-                                                                                <br>
-                                                                                <label="">STATUTORY BONUS</label>
-                                                                                    <input type="text"
-                                                                                        class="form-control"
-                                                                                        id="Statutory_Bonus"
-                                                                                        name="Statutory_Bonus"
-                                                                                        placeholder="Statutory_Bonus" />
-                                                                                    <br>
-                                                                                    <label="">LTA</label>
-                                                                                        <input type="text"
-                                                                                            class="form-control"
-                                                                                            id="lta" name="lta"
-                                                                                            placeholder="LTA" />
-                                                                                        <br>
-
-
-
-                                                                                        <label="">EXECUTIVE
-                                                                                            ALLOWANCE</label>
-                                                                                            <input type="text"
-                                                                                                class="form-control"
-                                                                                                id="Executive_Allowance"
-                                                                                                name="Executive_Allowance"
-                                                                                                placeholder="Executive_Allowance" />
-
-                                                                                            <br>
-                                                                                            <label="">FOOD
-                                                                                                ALLOWANCE</label>
-                                                                                                <input type="text"
-                                                                                                    class="form-control"
-                                                                                                    id="Food_Allowance"
-                                                                                                    name="Food_Allowance"
-                                                                                                    placeholder="Food Allowance" />
-
-                                                                                                <br>
-                                                                                                <label="">MOBILE CHARGES
-                                                                                                    REIMBURSEMENT</label>
-                                                                                                    <input type="text"
-                                                                                                        class="form-control"
-                                                                                                        id="m_c_r"
-                                                                                                        name="m_c_r"
-                                                                                                        placeholder="MOBILE CHARGES REIMBURSEMENT" />
-
-                                                                                                    <br>
-
-                                                                                                    <label="">ATTIRE
-                                                                                                        ALLOWANCE</label>
-                                                                                                        <input
-                                                                                                            type="text"
-                                                                                                            class="form-control"
-                                                                                                            id="Attire_Allowance"
-                                                                                                            name="Attire_Allowance"
-                                                                                                            placeholder="Attire Allowance" />
-
-                                                                                                        <br>
-                                                                                                        <label="">
-                                                                                                            VEHICLE
-                                                                                                            REIMBURSEMENT</label>
-                                                                                                            <input
-                                                                                                                type="text"
-                                                                                                                class="form-control"
-                                                                                                                id="vr"
-                                                                                                                name="vr"
-                                                                                                                placeholder="VEHICLE REIMBURSEMENT" />
-
-                                                                                                            <br>
-
-
-
-
-
-
-                            </div>
-                            <div class="col-lg-6">
-                                <label="">Address Line 1</label>
-                                    <input type="text" class="form-control" id="Ad1" name="Ad1"
-                                        placeholder="Address Line 1" />
-                                    <br>
-                                    <label="">Address Line 3</label>
-                                        <input type="text" class="form-control" id="Ad3" name="Ad3"
-                                            placeholder="Address Line 3" />
-                                        <br>
-                                        <label="">Pincode</label>
-                                            <input type="text" class="form-control" id="Pincode" name="Pincode"
-                                                placeholder="Pincode" />
-                                            <br>
-                                            <label="">Start Date</label>
-                                                <input type="date" class="form-control" id="Sd" name="Sd"
-                                                    placeholder="Start Date" />
-                                                <br>
-
-                                                <label="">Position</label>
-                                                    <input type="text" class="form-control" id="Position"
-                                                        name="Position" placeholder="Position" />
-                                                    <br>
-                                                    <label=""><b>GRADE</b></label>
-
-                                                        <select id="grade" name="grade" class="custom-select">
-                                                            <option selected>Select Grade</option>
-                                                            <?php
-$g_sql = "SELECT DISTINCT COL_1 FROm lta_list";
-$g_result = $link->query($g_sql);
-if ($g_result->num_rows > 0) {
-    while ($g_row = $g_result->fetch_assoc()) {
-        echo "<option value='" . $g_row['COL_1'] . "'>" . $g_row['COL_1'] . "</option>";
-    }
-}
-
-?>
-                                                        </select>
-                                                        <br>
-                                                        <br>
-                                                        <label=""><b>TARGETED CTC</b></label>
-                                                            <input type="text" class="form-control" id="ctc" name="ctc"
-                                                                placeholder="CTC" />
-                                                            <br>
-
-
-                                                            <label="">
-                                                                DRIVER
-                                                                REIMBURSEMENT</label>
-                                                                <input type="text" class="form-control" id="dr"
-                                                                    name="dr" placeholder="DRIVER REIMBURSEMENT" />
-
-                                                                <br>
-                                                                <label="">
-                                                                    RETENTION
-                                                                    ALLOWANCE</label>
-                                                                    <input type="text" class="form-control"
-                                                                        id="Retention_Allowance"
-                                                                        name="Retention_Allowance"
-                                                                        placeholder="Retention Allowance" />
-
-                                                                    <br>
-
-                                                                    <label="">
-                                                                        <b>TOTAL
-                                                                            A</b></label>
-                                                                        <input type="text" class="form-control"
-                                                                            id="Total_A" name="Total_A"
-                                                                            placeholder="Total_A" />
-
-                                                                        <br>
-
-                                                                        <label="">
-                                                                            PF</label>
-                                                                            <input type="text" class="form-control"
-                                                                                id="PF" name="PF" placeholder="PF" />
-
-                                                                            <br>
-
-                                                                            <label="">
-                                                                                ESIC</label>
-                                                                                <input type="text" class="form-control"
-                                                                                    id="ESIC" name="ESIC"
-                                                                                    placeholder="ESIC" />
+                                                                                    id="Food_Allowance"
+                                                                                    name="Food_Allowance"
+                                                                                    placeholder="Food Allowance" />
 
                                                                                 <br>
-                                                                                <label="">GRATUITY</label>
+
+
+                                                                                <label="">ATTIRE
+                                                                                    ALLOWANCE</label>
                                                                                     <input type="text"
                                                                                         class="form-control"
-                                                                                        id="gratuity" name="gratuity"
-                                                                                        placeholder="Gratuity" />
+                                                                                        id="Attire_Allowance"
+                                                                                        name="Attire_Allowance"
+                                                                                        placeholder="Attire Allowance" />
 
                                                                                     <br>
-                                                                                    <label=""><b>TOTAL B</b></label>
+
+                                                                                    <label="">
+                                                                                        DRIVER
+                                                                                        REIMBURSEMENT</label>
                                                                                         <input type="text"
                                                                                             class="form-control"
-                                                                                            id="Total_B" name="Total_B"
-                                                                                            placeholder="Total_B"
-                                                                                            onfocus="calhra()" />
+                                                                                            id="driver_reimbursement"
+                                                                                            name="driver_reimbursement"
+                                                                                            placeholder="DRIVER REIMBURSEMENT" />
+
                                                                                         <br>
-                                                                                        <label=""><b>TOTAL OF PART
-                                                                                                I(A+B)</b></label>
+                                                                                        <label="">
+                                                                                            <b>TOTAL
+                                                                                                A</b></label>
                                                                                             <input type="text"
                                                                                                 class="form-control"
-                                                                                                id="LTotal"
-                                                                                                name="LTotal"
-                                                                                                placeholder="Total A+B" />
+                                                                                                id="Total_A"
+                                                                                                name="Total_A"
+                                                                                                placeholder="Total_A" />
 
                                                                                             <br>
-                                                                                            <label=""><b>VARIABLE PAY
-                                                                                                    PERCENATGE<small
-                                                                                                        id="al2"
-                                                                                                        style="display:none;"
-                                                                                                        class="badge badge-danger">
-                                                                                                        ( Enter %
-                                                                                                        between 5
-                                                                                                        to 50 )
-                                                                                                    </small></b></label>
-                                                                                                <input type="number"
-                                                                                                    class="form-control"
-                                                                                                    id="vpp1"
-                                                                                                    name="vpp1"
-                                                                                                    placeholder="VARIABLE PAY" />
-
-                                                                                                <br>
-
-                                                                                                <div class="row">
-                                                                                                    <div
-                                                                                                        class="col-lg-4">
-                                                                                                        <label="">
-                                                                                                            VARIABLE
-                                                                                                            PAY*</label>
-                                                                                                    </div>
-                                                                                                    <div
-                                                                                                        class="col-lg-6">
-                                                                                                        <select id="vp"
-                                                                                                            class="custom-select"
-                                                                                                            style="border:none;background-color:transparent;margin-top:-10px !important">
-                                                                                                            <option
-                                                                                                                selected>
-                                                                                                                Variable
-                                                                                                                PAY*
-                                                                                                            </option>
-                                                                                                            <option
-                                                                                                                value="1">
-                                                                                                                1
-                                                                                                            </option>
-                                                                                                            <option
-                                                                                                                value="2">
-                                                                                                                2
-                                                                                                            </option>
-                                                                                                            <option
-                                                                                                                value="3">
-                                                                                                                3
-                                                                                                            </option>
-                                                                                                            <option
-                                                                                                                value="4">
-                                                                                                                4
-                                                                                                            </option>
-                                                                                                        </select>
-                                                                                                    </div>
-                                                                                                </div>
-
-
+                                                                                            <label="">
+                                                                                                ESIC</label>
                                                                                                 <input type="text"
                                                                                                     class="form-control"
-                                                                                                    id="Variable_Pay"
-                                                                                                    name="Variable_Pay"
-                                                                                                    placeholder="VARIABLE  PAY"
-                                                                                                    onfocus="calhra()" />
+                                                                                                    id="ESIC"
+                                                                                                    name="ESIC"
+                                                                                                    placeholder="ESIC" />
+
                                                                                                 <br>
-                                                                                                <label=""><b>TOTAL
-                                                                                                        OF
-                                                                                                        PART II</b>
-                                                                                                    </label>
+                                                                                                <label="">
+                                                                                                    <b>TOTAL
+                                                                                                        B</b></label>
                                                                                                     <input type="text"
                                                                                                         class="form-control"
-                                                                                                        id="Total_II"
-                                                                                                        name="Total_II"
-                                                                                                        placeholder="TOTAL OF PART II"
-                                                                                                        onfocus="calhra()" />
+                                                                                                        id="Total_B"
+                                                                                                        name="Total_B"
+                                                                                                        placeholder="Total_B" />
                                                                                                     <br>
+                                                                                                    <div class="row">
+                                                                                                        <div
+                                                                                                            class="col-lg-6">
+                                                                                                            <label="">
+                                                                                                                VARIABLE
+                                                                                                                COMPONENTS*</label>
+                                                                                                        </div>
+                                                                                                        <div
+                                                                                                            class="col-lg-6">
+                                                                                                            <select
+                                                                                                                id="vp"
+                                                                                                                class="custom-select"
+                                                                                                                style="border:none;background-color:transparent;margin-top:-10px !important">
+
+                                                                                                                <option
+                                                                                                                    selected>
+                                                                                                                    <b>Select
+                                                                                                                        One</b>
+                                                                                                                </option>
+                                                                                                                <option
+                                                                                                                    value="Variable Pay * ">
+                                                                                                                    Variable
+                                                                                                                    Pay
+                                                                                                                    *
+                                                                                                                </option>
+                                                                                                                <option
+                                                                                                                    value="Short Term Retention Bonus ** ">
+                                                                                                                    Short
+                                                                                                                    Term
+                                                                                                                    Retention
+                                                                                                                    Bonus
+                                                                                                                    **
+                                                                                                                </option>
+                                                                                                                <option
+                                                                                                                    value="Sales Incentive *** ">
+                                                                                                                    Sales
+                                                                                                                    Incentive
+                                                                                                                    ***
+                                                                                                                </option>
+                                                                                                                <option
+                                                                                                                    value="Business Incentive *** ">
+                                                                                                                    Business
+                                                                                                                    Incentive
+                                                                                                                    ***
+                                                                                                                </option>
+                                                                                                                <option
+                                                                                                                    value="Retention Bonus / Allowance #">
+                                                                                                                    Retention
+                                                                                                                    Bonus
+                                                                                                                    /
+                                                                                                                    Allowance
+                                                                                                                    #
+                                                                                                                </option>
+
+
+                                                                                                            </select>
+                                                                                                        </div>
+                                                                                                    </div>
+
+
+                                                                                                    <input type="text"
+                                                                                                        class="form-control"
+                                                                                                        id="Variable_Pay"
+                                                                                                        name="Variable_Pay"
+                                                                                                        placeholder="VARIABLE  PAY" />
+                                                                                                    <br>
+
                                                                                                     <label="">
-                                                                                                        <b>COST TO
+                                                                                                        <b>COST
+                                                                                                            TO
                                                                                                             COMPANY
-                                                                                                            (PART I
+                                                                                                            (PART
+                                                                                                            I
                                                                                                             +
                                                                                                             PART
                                                                                                             II)</b>
@@ -636,6 +552,168 @@ if ($g_result->num_rows > 0) {
                                                                                                             name="TOTAL"
                                                                                                             placeholder=" COST TO COMPANY (PART I+ PART II" />
                                                                                                         <br>
+                            </div>
+
+
+                            <div class="col-lg-6">
+
+                                <label="">Name</label>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Name" />
+                                    <br>
+                                    <label="">Address Line2</label>
+                                        <input type="text" class="form-control" id="Ad2" name="Ad2"
+                                            placeholder="Address Line 2" />
+                                        <br>
+                                        <label="">City</label>
+                                            <input type="text" class="form-control" id="City" name="City"
+                                                placeholder="City" />
+                                            <br>
+
+
+                                            <label="">DOJ</label>
+                                                <input type="date" class="form-control" id="doj" name="doj"
+                                                    placeholder="DOJ" />
+                                                <br>
+
+
+
+                                                <label="">Position</label>
+                                                    <input type="text" class="form-control" id="Position"
+                                                        name="Position" placeholder="Position" />
+                                                    <br>
+                                                    <label=""><b>OLD CTC</b></label>
+                                                        <input type="text" class="form-control" id="oldctc"
+                                                            name="oldctc" placeholder="OLD CTC" />
+                                                        <br>
+
+                                                        <label=""><b>GRADE</b></label>
+
+                                                            <select id="grade" name="grade" class="custom-select">
+                                                                <option selected>Select Grade</option>
+                                                                <?php
+$g_sql = "SELECT DISTINCT COL_1 FROm lta_list";
+$g_result = $link->query($g_sql);
+if ($g_result->num_rows > 0) {
+    while ($g_row = $g_result->fetch_assoc()) {
+        echo "<option value='" . $g_row['COL_1'] . "'>" . $g_row['COL_1'] . "</option>";
+    }
+}
+
+?>
+                                                            </select>
+                                                            <br>
+                                                            <br>
+
+                                                            <label=""><b>BASIC PERCENTAGE <small id="al1"
+                                                                        style="display:none;"
+                                                                        class="badge badge-danger"> (
+                                                                        Enter %
+                                                                        between 5
+                                                                        to 50 )
+                                                                    </small></b></label>
+                                                                <input type="number" class="form-control" id="basicp"
+                                                                    name="basicp" placeholder="basicp" />
+                                                                <br>
+
+                                                                <label="">HRA</label>
+                                                                    <input type="text" class="form-control" id="hra"
+                                                                        name="hra" placeholder="hra" />
+                                                                    <br>
+                                                                    <label="">STATUTORY BONUS</label>
+                                                                        <input type="text" class="form-control"
+                                                                            id="Statutory_Bonus" name="Statutory_Bonus"
+                                                                            placeholder="Statutory_Bonus" />
+                                                                        <br>
+
+                                                                        <label="">EXECUTIVE
+                                                                            ALLOWANCE</label>
+                                                                            <input type="text" class="form-control"
+                                                                                id="Executive_Allowance"
+                                                                                name="Executive_Allowance"
+                                                                                placeholder="Executive_Allowance" />
+
+                                                                            <br>
+                                                                            <label="">MOBILE
+                                                                                CHARGES
+                                                                                REIMBURSEMENT</label>
+                                                                                <input type="text" class="form-control"
+                                                                                    id="m_c_r" name="m_c_r"
+                                                                                    placeholder="MOBILE CHARGES REIMBURSEMENT" />
+
+                                                                                <br>
+
+                                                                                <label="">
+                                                                                    VEHICLE
+                                                                                    REIMBURSEMENT</label>
+                                                                                    <input type="text"
+                                                                                        class="form-control" id="vr"
+                                                                                        name="vr"
+                                                                                        placeholder="VEHICLE REIMBURSEMENT" />
+
+                                                                                    <br>
+
+                                                                                    <label="">
+                                                                                        RETENTION
+                                                                                        ALLOWANCE</label>
+                                                                                        <input type="text"
+                                                                                            class="form-control"
+                                                                                            id="Retention_Allowance"
+                                                                                            name="Retention_Allowance"
+                                                                                            placeholder="Retention Allowance" />
+
+                                                                                        <br>
+
+
+
+                                                                                        <label="">
+                                                                                            PF</label>
+                                                                                            <input type="text"
+                                                                                                class="form-control"
+                                                                                                id="PF" name="PF"
+                                                                                                placeholder="PF" />
+
+                                                                                            <br>
+
+
+                                                                                            <label="">
+                                                                                                GRATUITY</label>
+                                                                                                <input type="text"
+                                                                                                    class="form-control"
+                                                                                                    id="gratuity"
+                                                                                                    name="gratuity"
+                                                                                                    placeholder="Gratuity" />
+
+                                                                                                <br>
+
+                                                                                                <label="">
+                                                                                                    <b>TOTAL
+                                                                                                        OF
+                                                                                                        PART
+                                                                                                        I(A+B)</b></label>
+                                                                                                    <input type="text"
+                                                                                                        class="form-control"
+                                                                                                        id="LTotal"
+                                                                                                        name="LTotal"
+                                                                                                        placeholder="Total A+B" />
+
+                                                                                                    <br>
+
+
+
+                                                                                                    <label="">
+                                                                                                        <b>TOTAL
+                                                                                                            OF
+                                                                                                            PART
+                                                                                                            II</b>
+                                                                                                        </label>
+                                                                                                        <input
+                                                                                                            type="text"
+                                                                                                            class="form-control"
+                                                                                                            id="Total_II"
+                                                                                                            name="Total_II"
+                                                                                                            placeholder="TOTAL OF PART II" />
+                                                                                                        <br>
+
 
 
                             </div>

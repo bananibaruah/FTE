@@ -11,70 +11,59 @@ $Ad3 = $_POST["Ad3"];
 $Position = $_POST["Position"];
 $Pincode = $_POST["Pincode"];
 $City = $_POST["City"];
+$vp = $_POST["vp"];
+
 $state = $_POST["state"];
 $grade = $_POST["grade"];
 
 $ctc = $_POST["ctc"];
 
 $basic = $_POST["basic"];
-$basic1 = round($basic / 12);
-
 $hra = $_POST["hra"];
+$basic1 = round($basic / 12);
 $hra1 = round($hra / 12);
-
-$Conveyance_Allowance = $_POST['Conveyance_Allowance'];
-$Conveyance_Allowance1 = round($Conveyance_Allowance / 12);
-
 $Statutory_Bonus = $_POST['Statutory_Bonus'];
 $Statutory_Bonus1 = round($Statutory_Bonus / 12);
-
-$lta = $_POST['lta'];
-$lta1 = round($lta / 12);
-
+$Conveyance_Allowance = $_POST['Conveyance_Allowance'];
+$Conveyance_Allowance1 = round($Conveyance_Allowance / 12);
 $Executive_Allowance = $_POST['Executive_Allowance'];
 $Executive_Allowance1 = round($Executive_Allowance / 12);
-
+$lta = $_POST['lta'];
+$lta1 = round($lta / 12);
 $Food_Allowance = $_POST['Food_Allowance'];
 $Food_Allowance1 = round($Food_Allowance / 12);
-
 $m_c_r = $_POST['m_c_r'];
 $m_c_r1 = round($m_c_r / 12);
-
 $Attire_Allowance = $_POST['Attire_Allowance'];
-$Attire_Allowance1 = round($Attire_Allowance / 12);
-
+$Attire_ALlowance1 = round($Attire_Allowance / 12);
 $vr = $_POST['vr'];
 $vr1 = round($vr / 12);
-
-$dr = $_POST['dr'];
-$dr1 = round($dr / 12);
-
+$driver_reimbursement = $_POST['driver_reimbursement'];
+$driver_reimbursement1 = round($driver_reimbursement / 12);
 $Retention_Allowance = $_POST['Retention_Allowance'];
 $Retention_Allowance1 = round($Retention_Allowance / 12);
 
 $Total_A = $_POST['Total_A'];
 $Total_A1 = round($Total_A / 12);
-
 $PF = $_POST['PF'];
 $PF1 = round($PF / 12);
-
-$Gratuity = $_POST['Gratuity'];
-$Gratuity1 = round($Gratuity / 12);
+$ESIC = $_POST['ESIC'];
+$ESIC1 = round($ESIC / 12);
+$gratuity = $_POST['gratuity'];
+$Gratuity1 = round($gratuity / 12);
 
 $Total_B = $_POST['Total_B'];
 $Total_B1 = round($Total_B / 12);
 
-$LTOTAL = $_POST['LTOTAL'];
+$LTOTAL = $_POST['LTotal'];
 $LTOTAL1 = round($LTOTAL / 12);
-
 $Variable_Pay = $_POST['Variable_Pay'];
 $Variable_Pay1 = round($Variable_Pay / 12);
-
 $Total_II = $_POST['Total_II'];
 $Total_II1 = round($Total_II / 12);
 
-$Total = $_POST['Total'];
-$Total1 = round($Total / 12);
+$TOTAL = $_POST['TOTAL'];
+$TOTAL1 = round($TOTAL / 12);
 
 $Code = $_POST['Code'];
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -206,10 +195,10 @@ $state <br><br>
 
 Dear $name , <br><br>
 </b>
-Further to our discussions we are pleased to offer you the role of <b>"Associate Systems Analyst”</b>. The detailed terms and conditions of your offer have been set out in Annexures I and II and are enclosed herewith.<br><br>
+Further to our discussions we are pleased to offer you the role of <b>$Position</b>. The detailed terms and conditions of your offer have been set out in Annexures I and II and are enclosed herewith.<br><br>
 Please take the time to read and understand the offer details. Should you have any queries on the terms please contact your Talent Acquisition representative. <br><br>
 You are requested to give us your e-mail confirmation of having accepted the terms and conditions of our offer letter within 2 days of our e-mail, followed by sending us a duly signed copy of the same in token of your acceptance of the said offer letter no later than 10 days from the date of issue of this letter, failing which this offer stands withdrawn. <br><br>
-You are required to report for duty on April 11, 2022 not later than 9.30 a.m.  If you do not join by this date then this offer would automatically stand withdrawn, unless the date of joining is revised and is communicated to you in writing.<br><br>       																							         
+You are required to report for duty on <b>$doj</b> not later than 9.30 a.m.  If you do not join by this date then this offer would automatically stand withdrawn, unless the date of joining is revised and is communicated to you in writing.<br><br>       																							         
 Note: This offer made to you is on the basis of the details declared by you in the Employment Application Form (EAF). In case of any discrepancies found in the EAF the said offer will stand null and void with immediate effect.<br><br>
 Ashwini Patange we look forward to you joining NSEIT for a mutually rewarding association.<br><br>
 Yours sincerely,<br>
@@ -219,7 +208,7 @@ Head – HR<br><br>
 Encl:-</b><br>
 &nbsp;&nbsp;&nbsp;1.	Offer details<br>
 &nbsp;&nbsp;&nbsp;2.	Annexure I and II.<br><br>
-We request you to return all the documents attached duly signed and join us on or before April 11, 2022.<br><br><br><brr>
+We request you to return all the documents attached duly signed and join us on or before <b>$doj</b>.<br><br><br><brr>
 <b><u>Signature & Date</u></b>
 <P style="page-break-before: always">
 EOD;
@@ -241,10 +230,10 @@ $state <br><br>
 
 Dear $name , <br><br>
 </b>
-Further to our discussions we are pleased to offer you the role of <b>"Associate Systems Analyst”</b>. The detailed terms and conditions of your offer have been set out in Annexures I and II and are enclosed herewith.<br><br>
+Further to our discussions we are pleased to offer you the role of <b>"$position”</b>. The detailed terms and conditions of your offer have been set out in Annexures I and II and are enclosed herewith.<br><br>
 Please take the time to read and understand the offer details. Should you have any queries on the terms please contact your Talent Acquisition representative. <br><br>
 You are requested to give us your e-mail confirmation of having accepted the terms and conditions of our offer letter within 2 days of our e-mail, followed by sending us a duly signed copy of the same in token of your acceptance of the said offer letter no later than 10 days from the date of issue of this letter, failing which this offer stands withdrawn. <br><br>
-You are required to report for duty on April 11, 2022 not later than 9.30 a.m.  If you do not join by this date then this offer would automatically stand withdrawn, unless the date of joining is revised and is communicated to you in writing.<br><br>       																							         
+You are required to report for duty on <b>$doj</b> not later than 9.30 a.m.  If you do not join by this date then this offer would automatically stand withdrawn, unless the date of joining is revised and is communicated to you in writing.<br><br>       																							         
 Note: This offer made to you is on the basis of the details declared by you in the Employment Application Form (EAF). In case of any discrepancies found in the EAF the said offer will stand null and void with immediate effect.<br><br>
 Ashwini Patange we look forward to you joining NSEIT for a mutually rewarding association.<br><br>
 Yours sincerely,<br>
@@ -254,7 +243,7 @@ Head – HR<br><br>
 Encl:-</b><br>
 &nbsp;&nbsp;&nbsp;1.	Offer details<br>
 &nbsp;&nbsp;&nbsp;2.	Annexure I and II.<br><br>
-We request you to return all the documents attached duly signed and join us on or before April 11, 2022.<br><br><br><brr>
+We request you to return all the documents attached duly signed and join us on or before <b>$doj</b><br><br><br><brr>
 <b><u>Signature & Date</u></b>
 <P style="page-break-before: always">
 EOD;
@@ -303,6 +292,7 @@ Background Verification:The Company reserves the right to carry out reference ve
 
 <br><br><br><br><br><br><br>
 EOD;
+
 $html .= <<<EOD
 &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
@@ -334,6 +324,7 @@ f.	Salary in all the above cases refers to Basic Salary.  <br><br>
 &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;<b><u>Initials</u></b>
 
 <br><br><br><br><br><br><br>
+
 EOD;
 
 
@@ -353,26 +344,26 @@ $name<br>
 <br><br>
 <table cellspacing="0" cellpadding="1" border="1" style="border-color:gray width:100% height:100%;">
    <tr style="background-color:white;color:black;">
-        <td><b>Name</b></td>
+        <td><b>FTE Name</b></td>
         <td><b>$name</b></td>
         <td><b>Location</b></td>
-		<td><b>$Ad3</b></td>
+		<td><b>$City</b></td>
     </tr>
     <tr>
         <td><b>Designation</b></td>
         <td><b>$Position</b></td>
-        <td><b>Grade</b></td>
-		<td><b>$grade</b></td>
-    </tr>
-	<tr>
-        <td><b>wef</b></b></td>
-        <td>$Sd</td>
-		<td><b>All Figures in INR</b></td>
+        <td><b></b></td>
 		<td><b></b></td>
     </tr>
 	<tr>
+        <td><b>wef</b></td>
+        <td><b>$Sd</b></td>
+		<td><b>Grade</b></td>
+		<td><b>$grade</b></td>
+    </tr>
+	<tr>
         <td><b></b></td>
-        <td><b></b></td>
+        <td><b>Compensation Head</b></td>
 		<td><b>Monthly</b></td>
 		<td><b>Annual</b></td>
     </tr>
@@ -403,8 +394,8 @@ $name<br>
     <tr>
         <td><b></b></td>
         <td>Conveyance Allowance</td>
-		<td>$ca1</td>
-		<td>$ca</td>
+		<td>$Conveyance_Allowance1</td>
+		<td>$Conveyance_Allowance</td>
     </tr>
     <tr>
         <td><b></b></td>
@@ -414,21 +405,45 @@ $name<br>
     </tr>
     <tr>
         <td><b></b></td>
-        <td>LTA</td>
+        <td>Statutory Bonus</td>
 		<td>$lta1</td>
 		<td>$lta</td>
     </tr>
     <tr>
         <td><b></b></td>
-        <td>Executive Allowance</td>
-		<td>$Executive_Allowance1</td>
-		<td>$Executive_Allowance</td>
+        <td>Food Allowance</td>
+		<td>$Food_Allowance1</td>
+		<td>$Food_Allowance</td>
     </tr>
     <tr>
         <td><b></b></td>
-        <td>Mobile Charges Reimbursement</td>
+        <td>EMobile Reimbursement Charges</td>
 		<td>$m_c_r1</td>
 		<td>$m_c_r</td>
+    </tr>
+    <tr>
+        <td><b></b></td>
+        <td>Attire Allowance</td>
+		<td>$Attire_Allowance1</td>
+		<td>$Attire_Allowance</td>
+    </tr>
+    <tr>
+        <td><b></b></td>
+        <td>Vehicle Reimbursement</td>
+		<td>$vr1</td>
+		<td>$vr</td>
+    </tr>
+    <tr>
+        <td><b></b></td>
+        <td>Driver_reimbursement</td>
+		<td>$driver_reimbursement1</td>
+		<td>$driver_reimbursement</td>
+    </tr>
+    <tr>
+        <td><b></b></td>
+        <td>Retention Allowance</td>
+		<td>$Retention_Allowance1</td>
+		<td>$Retention_Allowancee</td>
     </tr>
     <tr>
         <td><b></b></td>
@@ -450,9 +465,15 @@ $name<br>
     </tr>
     <tr>
         <td><b></b></td>
-        <td>Gratuity</td>
-        <td>$Gratuity1</td>
-        <td>$Gratuity</td>
+        <td>ESIC</td>
+		<td>$ESIC1</td>
+		<td>$ESIC</td>
+    </tr>
+    <tr>
+        <td><b></b></td>
+        <td>GRATUITY </td>
+		<td>$gratuity1</td>
+		<td>$gratuity</td>
     </tr>
     <tr>
         <td><b></b></td>
@@ -463,61 +484,45 @@ $name<br>
     <tr>
         <td><b></b></td>
         <td><b>Total of PART I (A+B)</b>  </td>
-		<td><b>$LTotal1</b></td>
-		<td><b>$LTotal</b></td>
-    </tr>
+		<td><b>$LTOTAL1</b></td>
+		<td><b>$LTOTAL</b></td>
+    </tr>  
     <tr>
         <td><b>PART II</b></td>
-        <td><b>Varaiable Components</b>  </td>
-		<td><b></b></td>
-		<td><b></b></td>
+        <td><b>Variable Components</b>  </td>
+        <td><b></b></td>
+        <td><b></b></td>
     </tr>
     <tr>
         <td><b></b></td>
-        <td><>Variable Pay *</td>
-		<td><b>$Variable_Pay1</b></td>
-		<td><b>$Variable_Pay</b></td>
+        <td>Variable Pay * </td>
+        <td></td>
+        <td>$Variable_Pay</td>
     </tr>
     <tr>
         <td><b></b></td>
-        <td><b>Total of PART II</b>  </td>
-		<td><b>$Total_II1</b></td>
+        <td><b> Total of Part II</b>  </td>
+		<td><b></b></td>
 		<td><b>$Total_II</b></td>
     </tr>
     <tr>
+    <td><b></b></td>
+        <td><b> Cost to Company Part I + Part II</b>  </td>
         <td><b></b></td>
-        <td><b> Cost to Company (PART I + PART II)</b>  </td>
-		<td><b>$Total1</b></td>
-		<td><b>$Total</b></td>
+        <td><b>$TOTAL</b></td>
     </tr>
-
+    <tr>
+        <td colspan="4"><b>Please note: </b></td>
+    </tr>
     <tr>
         <td colspan="4">
-        <b>Please note:</b>
+        Please note:<br>
+        The company provides the following benefits for their FTE's, the premium for which is directly paid by the company:<br>
+        * Personal Accident Policy for the FTE's.<br>
+        * Incase of any amendment in compliance law, the company reserves right to restructure the salary components keeping the CTC  intact adhering to compliance<br>
         </td>
-    </tr>
-    
-    <tr>
-        <td colspan="4">1. All Allowances / Bonuses / Incentives / Rewards / Benefits will be paid / reimbursed as per the Company policy. Employees who are on the rolls of the organization on the day of disbursement will be eligible for the same. 
-        <br>2. All employees are requested to keep themselves updated with changes announced in policies and procedures on the HRMS.                         
-        <br>3. Payment of Gratuity will be in accordance with the Gratuity Act, 1972.
-        <br>4. Incase of any amendment in compliance law, the company reserves right to restructure the salary components keeping the CTC intact adhering to compliance.
-        </td>
-    </tr>
-
-    <tr>
-        <td colspan="4">*  Currently paid bi-annually in April and October every year s.t. performance and you being confirmed on rolls of organization.
-        </td>
-        </tr>
-
-    <tr>
-        <td colspan="4"><b>In addition to the above:</b> <br>The company provides the following benefits for their employees, the premium for which is directly paid by the company:<br>
-        a. Mediclaim for employees and their eligible dependents (as defined by the company).<br>
-        b. Personal Accident Policy for the employees.
-        </td>
-    </tr>
         
-    
+    </tr>
 </table>
 <P style="page-break-before: always"><br>
 EOD;
@@ -550,7 +555,7 @@ $html .= <<<EOD
 3.	<u>Proof of Age (Any One) :</u><br><br>
     School Leaving Certificate, S.S.C. Certificate, Birth Certificate, Transfer Certificate<br><br>
 
-4.	Proof of Residence (Any One) :<br><br>
+4.	<b>Proof of Residence (Any One) :</b><br><br>
     Driving License, Passport, Ration Card, Ownership Agreement, Bank Statement, Electricity Bill, Telephone Bill, Passport, Leave and License Agreement<br><br>
     
 5.	<u>PAN Card</u><br><br>
