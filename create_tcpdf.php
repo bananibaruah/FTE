@@ -20,6 +20,7 @@ $grade = $_POST["grade"];
 $ctc = $_POST["ctc"];
 
 $basic = $_POST["basic"];
+$basicp = $_POST['basicp'];
 $hra = $_POST["hra"];
 $basic1 = round($basic / 12);
 $hra1 = round($hra / 12);
@@ -69,8 +70,8 @@ $TOTAL1 = round($TOTAL / 12);
 $Code = $_POST['Code'];
 $chkPassPort = $_POST['chkPassPort'];
 
-$ins_sql = "INSERT INTO fte_ol(Code, Name, State, Start_Date, End_Date, DOJ,Position,CTC,Basic,HRA,STATUTORY_BONUS,CONVEYANCE_ALLOWANCE,EXECUTIVE_ALLOWANCE,TOTAL_A,PF,ESIC,TOTAL_B,TOTAL) 
-            Values('$Code', '$name', '$state', '$Sd1', '$ed1', '$doj1', '$Position', '$ctc', '$basic', '$hra',$Statutory_Bonus,'$Conveyance_Allowance','$Executive_Allowance','$Total_A', '$PF', '$ESIC', '$Total_B', '$TOTAL')";
+$ins_sql = "INSERT INTO fte_ol(Code, Name, Address1, Address2, Address3, City, Pincode, State, Start_Date, End_Date, DOJ,Position,CTC,Basic_Per, Basic,HRA,STATUTORY_BONUS,CONVEYANCE_ALLOWANCE,EXECUTIVE_ALLOWANCE,TOTAL_A,PF,ESIC,TOTAL_B,TOTAL, J_Bonus) 
+            Values('$Code', '$name', '$Ad1', '$Ad2', '$Ad3', '$City', '$Pincode', '$state', '$Sd1', '$ed1', '$doj1', '$Position', '$ctc', '$basicp', '$basic', '$hra',$Statutory_Bonus,'$Conveyance_Allowance','$Executive_Allowance','$Total_A', '$PF', '$ESIC', '$Total_B', '$TOTAL', '$jbamount')";
 
 $link->query($ins_sql);
 
