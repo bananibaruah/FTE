@@ -67,11 +67,16 @@ $Total_II1 = round($Total_II / 12);
 $TOTAL = $_POST['TOTAL'];
 $TOTAL1 = round($TOTAL / 12);
 
+$wsd = $_POST['wsd'];
+$wed = $_POST['wed'];
+
+$aloc = $_POST['aloc'];
+
 $Code = $_POST['Code'];
 $chkPassPort = $_POST['chkPassPort'];
 
 $ins_sql = "INSERT INTO fte_ol(Code, Name, Address1, Address2, Address3, City, Pincode, State, Start_Date, End_Date, DOJ,Position,CTC,Basic_Per, Basic,HRA,STATUTORY_BONUS,CONVEYANCE_ALLOWANCE,EXECUTIVE_ALLOWANCE,TOTAL_A,PF,ESIC,TOTAL_B,TOTAL, J_Bonus) 
-            Values('$Code', '$name', '$Ad1', '$Ad2', '$Ad3', '$City', '$Pincode', '$state', '$Sd1', '$ed1', '$doj1', '$Position', '$ctc', '$basicp', '$basic', '$hra',$Statutory_Bonus,'$Conveyance_Allowance','$Executive_Allowance','$Total_A', '$PF', '$ESIC', '$Total_B', '$TOTAL', '$jbamount')";
+            Values('$Code', '$name', '$Ad1', '$Ad2', '$Ad3', '$City', '$Pincode', '$state', '$Sd', '$ed', '$doj', '$Position', '$ctc', '$basicp', '$basic', '$hra',$Statutory_Bonus,'$Conveyance_Allowance','$Executive_Allowance','$Total_A', '$PF', '$ESIC', '$Total_B', '$TOTAL', '$jbamount')";
 
 $link->query($ins_sql);
 
@@ -88,6 +93,14 @@ $doj1 = date("F d, Y", strtotime($doj));
 $Sd1 = date("F d, Y", strtotime($Sd));
 $ed1 = date("F d, Y", strtotime($ed));
 
+function CurrencyFormat($number)
+{
+    $decimalplaces = 2;
+    $decimalcharacter = '.';
+    $thousandseparater = ',';
+    return number_format($number, $decimalplaces, $decimalcharacter, $thousandseparater);
+}
+
 // echo $doj1;
 
 // Extend the TCPDF class to create custom Header and Footer
@@ -99,7 +112,7 @@ class MYPDF extends TCPDF
     {
         // Logo
         $image_file = 'header.png';
-        $this->Image($image_file, 30, 10, 150, '', 'png', '', 'T', false, 200, '', false, false, 0, false, false, false);
+        $this->Image($image_file, 6, 9, 170, '', 'png', '', 'T', false, 200, '', false, false, 0, false, false, false);
         // Set font
         $this->SetFont('times', '', 10.8);
         // Title
@@ -225,6 +238,8 @@ Encl:-</b><br>
 &nbsp;&nbsp;&nbsp;2.	Annexure I and II.<br><br>
 <i><u><b>Signature & Date</b></u></i><br>
 
+
+
 EOD;
 
 $html .= <<<EOD
@@ -264,7 +279,7 @@ Encl:-</b><br>
 EOD;
 
 $html .= '
-<br>' . $name . '<br><br><br>
+<br><br><br>' . $name . '<br><br><br>
 &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
@@ -274,9 +289,9 @@ $html .= '
 
 <b>1.	Term of employment:</b><br>
 
-You are on a fixed term employment from <b>$Sd1</b> to <b>$ed1</b>.<br><br>
+You are on a fixed term employment from <b>' . $Sd1 . '</b> to <b>' . $ed1 . '</b>.<br><br>
 
-Your working days will be <b>Monday</b> to <b>Friday</b>.<br><br>
+Your working days will be <b>' . $wsd . '</b> to <b>' . $wed . '</b>.<br><br>
 
 
 <b>2.	Probation:</b><br>
@@ -285,9 +300,7 @@ You will be on probation for a period of 3 months from your date of joining.<br>
 
 
 
-<b>3.	Remuneration:</b><br>
-
-Remuneration:';
+<b>3.	Remuneration:</b><br>:';
 if ($chkPassPort == "no") 
 {
     $html .= 'Your salary and allowances will be as per the details attached to this letter and marked as Annexure I.';
@@ -342,13 +355,13 @@ The Company reserves the right to carry out reference verifications or backgroun
 &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<b>Initials</b>
-<br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br>
 ';
 
 
 
 
-$html .= '<br><br>' . $name . '<br>
+$html .= '<br>' . $name . '<br><br><br>
 
 &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
@@ -364,10 +377,10 @@ $html .= '<br><br>' . $name . '<br>
     </tr>
 
     <tr>
-      <td style= "width:15%;"><b>&nbsp; &nbsp; &nbsp;&nbsp;Name</b></td>
+      <td style= "width:15%;"><b>&nbsp; &nbsp; &nbsp;FTE Name</b></td>
       <td style= "width:45%;"><b>&nbsp; &nbsp; &nbsp;' . $name . '</b></td>
       <td style= "width:20%;"><b>&nbsp; &nbsp; &nbsp;Location</b></td>
-      <td style= "width:20%;"><b>&nbsp; &nbsp; &nbsp;' . $City . '</b></td>
+      <td style= "width:20%;"><b>&nbsp; &nbsp; &nbsp;' . $aloc . '</b></td>
     </tr>
     <tr>
         <td><b>&nbsp; &nbsp; &nbsp;Designation</b></td>
@@ -376,14 +389,14 @@ $html .= '<br><br>' . $name . '<br>
 		<td></td>
     </tr>
 	<tr>
-        <td><b>&nbsp; &nbsp; &nbsp;wef</b></td>
+        <td><b>&nbsp; &nbsp; &nbsp;w.e.f</b></td>
         <td><b>&nbsp; &nbsp; &nbsp;' . $Sd1 . '</b></td>
 		<td style="text-align:center"><b>Grade</b></td>
 		<td style="text-align:center"><b>' . $grade . '</b></td>
     </tr>
 	<tr>
         <td><b></b></td>
-        <td><b></b></td>
+        <td>&nbsp; &nbsp; &nbsp;<b>Compensation Head</b></td>
 		<td style="text-align:center"><b>Monthly</b></td>
 		<td style="text-align:center"><b>Annual</b></td>
     </tr>
@@ -402,42 +415,42 @@ $html .= '<br><br>' . $name . '<br>
     <tr>
         <td><b></b></td>
         <td>&nbsp; &nbsp; &nbsp;Basic</td>
-		<td style="text-align: right;">' . $basic1 . '</td>
-		<td style="text-align: right;">' . $basic . '</td>
+		<td style="text-align: right;">' . number_format((int)$basic1) . '</td>
+		<td style="text-align: right;">' . number_format((int)$basic) . '</td>
     </tr>
     <tr>
         <td><b></b></td>
         <td>&nbsp; &nbsp; &nbsp;HRA</td>
-        <td style="text-align: right;">' . $hra1 . '</td>
-        <td style="text-align: right;">' . $hra . '</td>
+        <td style="text-align: right;">' . number_format((int)$hra1) . '</td>
+        <td style="text-align: right;">' . number_format((int)$hra) . '</td>
     </tr>
     <tr>
         <td><b></b></td>
         <td>&nbsp; &nbsp; &nbsp;Conveyance Allowance</td>
-		<td style="text-align: right;">' . $Conveyance_Allowance1 . '</td>
-		<td style="text-align: right;">' . $Conveyance_Allowance . '</td>
+		<td style="text-align: right;">' . number_format((int)$Conveyance_Allowance1) . '</td>
+		<td style="text-align: right;">' . number_format((int)$Conveyance_Allowance) . '</td>
     </tr>
     <tr>
         <td><b></b></td>
         <td>&nbsp; &nbsp; &nbsp;Statutory Bonus</td>
-		<td style="text-align: right;">' . $Statutory_Bonus1 . '</td>
-		<td style="text-align: right;">' . $Statutory_Bonus . '</td>
+		<td style="text-align: right;">' . number_format((int)$Statutory_Bonus1) . '</td>
+		<td style="text-align: right;">' . number_format((int)$Statutory_Bonus) . '</td>
     </tr>';
 
 
 $html .= '<tr>
     <td><b></b></td>
         <td>&nbsp; &nbsp; &nbsp;Executive Allowance</td>
-        <td style="text-align: right;">' . $Executive_Allowance1 . '</td>
-        <td style="text-align: right;">' . $Executive_Allowance . '</td>
+        <td style="text-align: right;">' . number_format((int)$Executive_Allowance1) . '</td>
+        <td style="text-align: right;">' . number_format((int)$Executive_Allowance) . '</td>
     </tr>';
 
 
 $html .= '<tr>
         <td><b></b></td>
         <td><b>&nbsp; &nbsp; &nbsp;Total A</b></td>
-		<td style="text-align: right;"><b>' . $Total_A1 . '</b></td>
-		<td style="text-align: right;"><b>' . $Total_A . '</b></td>
+		<td style="text-align: right;"><b>' . number_format((int)$Total_A1) . '</b></td>
+		<td style="text-align: right;"><b>' . number_format((int)$Total_A) . '</b></td>
     </tr>
     <tr>
         <td><b>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;B</b></td>
@@ -448,8 +461,8 @@ $html .= '<tr>
     <tr>
         <td><b></b></td>
         <td>&nbsp; &nbsp; &nbsp;Employer Contribution to Provident Fund </td>
-		<td style="text-align: right;">' . $PF1 . '</td>
-		<td style="text-align: right;">' . $PF . '</td>
+		<td style="text-align: right;">' . number_format((int)$PF1) . '</td>
+		<td style="text-align: right;">' . number_format((int)$PF) . '</td>
     </tr>';
 
 
@@ -457,29 +470,29 @@ if ($ESIC != 0) {
     $html .= '<tr>
         <td><b></b></td>
         <td>&nbsp; &nbsp; &nbsp;ESIC</td>
-		<td style="text-align: right;">' . $ESIC1 . '</td>
-		<td style="text-align: right;">' . $ESIC . '</td>
+		<td style="text-align: right;">' . number_format((int)$ESIC1) . '</td>
+		<td style="text-align: right;">' . number_format((int)$ESIC) . '</td>
     </tr>';
 }
 
 $html .= '<tr>
         <td><b></b></td>
         <td><b>&nbsp; &nbsp; &nbsp;Total B</b></td>
-		<td style="text-align: right;"><b>' . $Total_B1 . '</b></td>
-		<td style="text-align: right;"><b>' . $Total_B . '</b></td>
+		<td style="text-align: right;"><b>' . number_format((int)$Total_B1) . '</b></td>
+		<td style="text-align: right;"><b>' . number_format((int)$Total_B) . '</b></td>
     </tr>
     <tr>
         <td><b></b></td>
         <td><b>&nbsp; &nbsp; &nbsp;Total of PART I (A+B)</b>  </td>
-		<td style="text-align: right;"><b>' . $LTOTAL1 . '</b></td>
-		<td style="text-align: right;"><b>' . $LTOTAL . '</b></td>
+		<td style="text-align: right;"><b>' . number_format((int)$LTOTAL1) . '</b></td>
+		<td style="text-align: right;"><b>' . number_format((int)$LTOTAL) . '</b></td>
     </tr>  
    
     <tr>
     <td><b></b></td>
         <td><b> &nbsp; &nbsp; &nbsp;Cost to Company PART I (A + B) </b>  </td>
         <td><b></b></td>
-        <td style="text-align: right;"><b>' . $TOTAL . '</b></td>
+        <td style="text-align: right;"><b>' . number_format((int)$TOTAL) . '</b></td>
     </tr>
     <tr>
         <td colspan="4"><b>&nbsp; &nbsp; Please note: </b></td>
@@ -514,11 +527,11 @@ $html .= '<tr>
 &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<b>Initials</b>
-<P style="page-break-before: always"><br>
+<P style="page-break-before: always"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 ';
 
-$html .= <<<EOD
-<br>$name<br>
+$html .= '
+<br><br><br><br><br><br><br><br><br><br>' . $name . '<br>
 <br><br>&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
@@ -532,7 +545,7 @@ $html .= <<<EOD
 &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 &nbsp; &nbsp; 
-<b><u>LIST OF DOCUMENTS</u></b><br><br><br>
+<b><u>LIST OF DOCUMENTS</u></b><br><br>
 
 <b>You are required to submit the following documents* on the day you join the Company:</b><br><br>
 
@@ -583,7 +596,7 @@ $html .= <<<EOD
 &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;<b>Initials</b>
 
 <br>
-EOD;
+';
 
 $pdf->writeHTML($html, true, false, true, false, '');
 ob_end_clean();

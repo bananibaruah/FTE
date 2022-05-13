@@ -55,15 +55,19 @@
         mcr1 = 0,
         dr1 = 0,
         old_check = 0;
-        oc1 = 0;
-        ctotal = 0;
-        var w = 0;
-        var w1 = 0;
-        var tb3 = 0;
-        var mra = 0;
-        var flag = 0,
+    oc1 = 0;
+    ctotal = 0;
+    var w = 0;
+    var w1 = 0;
+    var tb3 = 0;
+    var mra = 0;
+    var flag = 0,
         eflag = 0,
-        rechange_e = 0;
+        yflag = 0;
+    rechange_e = 0, rechange_y = 0;
+
+
+
     $(document).ready(function() {
 
         $("#Retention_Allowance").on("keyup", function() {
@@ -71,47 +75,52 @@
             flag = 1;
             basic_pay_ch();
         });
+        if (y < 21000) {
+            $("#state").on("change", function() {
+                var state = $("#state").val();
+                var ctc = $("#ctc").val();
+                var state_val = 0;
+                var sbb = 0;
+                total_state = 0;
+                if (ctc != "") {
+                    $.ajax({
+                        type: "POST",
+                        url: "state_check.php",
+                        data: "a=" + state,
+                        success: function(data) {
+                            if (data != "not found") {
+                                state_val = parseInt(data);
+                                var dy = 0,
+                                    dy1 = 0;
+                                dy = Math.floor((ctc * (x / 100)) / 12);
+                                dy1 = dy * 0.01;
+                                y = parseInt(Math.floor(dy1) + "00");
+                                if (y < 21000) {
+                                    sbb = Math.round(y * (20 / 100));
 
-        $("#state").on("change", function() {
-            var state = $("#state").val();
-            var ctc = $("#ctc").val();
-            var state_val = 0;
-            var sbb = 0;
-            total_state = 0;
-            if (ctc != "") {
-                $.ajax({
-                    type: "POST",
-                    url: "state_check.php",
-                    data: "a=" + state,
-                    success: function(data) {
-                        if (data != "not found") {
-                            state_val = parseInt(data);
-                            var dy = 0,
-                                dy1 = 0;
-                            dy = Math.floor((ctc * (x / 100)) / 12);
-                            dy1 = dy * 0.01;
-                            y = parseInt(Math.floor(dy1) + "00");
-                            if (y < 21000) {
-                                sbb = Math.round(y * (20 / 100));
-
-                                if (sbb > state_val) {
-                                    total_state = (sbb);
-                                    $('#Statutory_Bonus').val(total_state * 12);
+                                    if (sbb > state_val) {
+                                        total_state = (sbb);
+                                        $('#Statutory_Bonus').val(total_state * 12);
+                                    } else {
+                                        total_state = state_val;
+                                        $('#Statutory_Bonus').val(total_state * 12);
+                                    }
                                 } else {
-                                    total_state = state_val;
-                                    $('#Statutory_Bonus').val(total_state * 12);
+                                    alert(data);
                                 }
-                            } else {
-                                alert(data);
                             }
-                        }
-                        basic_pay_ch();
-                    },
-                });
-            } else {
+                            basic_pay_ch();
+                        },
+                    });
+                } else {
 
-            }
-        });
+                }
+            });
+
+        } else {
+            total_state = 0;
+        }
+
 
         $("#grade").on("change", function() {
             var grade = $("#grade").val();
@@ -150,6 +159,8 @@
 
                 },
             });
+
+
         });
 
 
@@ -221,6 +232,12 @@
             eflag = 1;
             basic_pay_ch();
         });
+        $("#basic").on('change', function() {
+            rechange_y = $("#basic").val();
+            rechange_y = (rechange_y / 12);
+            yflag = 1;
+            basic_pay_ch();
+        });
 
     });
 
@@ -239,20 +256,44 @@
                     dy = Math.floor((ctc * (x / 100)) / 12);
                     dy1 = dy * 0.01;
                     y = parseInt(Math.floor(dy1) + "00");
-                    hr = y / 2;
+
+                    if (yflag == 0) {
+                        hr = y / 2;
+                    }
+                    if (yflag == 1) {
+                        y = rechange_y;
+                        hr = y / 2;
+                    }
+
 
                     ca = 1600;
-                    if (flag == 0) {
-                        ta1 = y + hr + ca + total_state;
-                    }
-                    if (flag == 1) {
-                        ra = parseInt(mra);
-                        var ct = 0,
-                            ct1 = 0;
-                        ct = Math.floor(ra / 12);
+                    if (y < 21000) {
 
-                        ta1 = y + hr + ca + total_state;
+                        if (flag == 0) {
+                            ta1 = y + hr + ca + total_state;
+                        }
+                        if (flag == 1) {
+                            ra = parseInt(mra);
+                            var ct = 0,
+                                ct1 = 0;
+                            ct = Math.floor(ra / 12);
+
+                            ta1 = y + hr + ca + total_state;
+                        }
+                    } else {
+                        if (flag == 0) {
+                            ta1 = y + hr + ca;
+                        }
+                        if (flag == 1) {
+                            ra = parseInt(mra);
+                            var ct = 0,
+                                ct1 = 0;
+                            ct = Math.floor(ra / 12);
+
+                            ta1 = y + hr + ca;
+                        }
                     }
+
 
 
                     var y_12 = y;
@@ -290,17 +331,72 @@
 
                     // gt = (y / 12);
 
+                    var e_12_1 = 0;
+                    var esic_1 = 0;
+                    var total_esic_1 = 0;
+                    var e_12_1 = (ta1 - ca);
+                    esic12 = e_12_1;
+                    if (esic12 <= 21000) {
+                        total_esic_1 = e_12_1 * (3.25 / 100);
+                        $("#ESIC").val(Math.round(total_esic_1));
+                    } else {
+                        total_esic_1 = 0;
+                        $("#ESIC").val(Math.round(total_esic_1));
+                    }
+
+
+                    tb12_1 = pf + total_esic_1;
+                    tb1_1 = tb12_1 / 12;
+
+
+
+                    valtab_1 = 0;
+                    valtab1_1 = 0;
+                    valtab_1 = ta1 + tb1_1;
+                    valtab1_1 = valtab_1;
+
+                    var e1old_1 = 0;
+                    var eold_1 = 0;
+                    e1_1 = ctc - valtab1_1;
+                    ctc3_1 = ctc / 12;
+                    e1old_1 = ctc3_1 - valtab1_1;
+                    e_1 = e1old_1;
+                    console.log("e1lod : " + e1old_1);
+
+                    // // alert(e);
+                    if (e_1 < 0) {
+                        alert("Executive Allowance Value in Minus");
+                        if (flag == 0) {
+                            eold_1 = e_1;
+                            $("#Old_Executive_Allowance").val(eold_1);
+                            $("#OEAV").html(Math.round(eold_1));
+
+                            e_1 = 0;
+                        }
+                    }
+                    if (e_1 < 0) {
+                        ta2 = ta1;
+                    }
+                    if (eflag == 1) {
+                        e_1 = rechange_e;
+                        ta2_1 = ta1 + e_1;
+                    } else {
+                        ta2_1 = ta1 + e_1;
+                        console.log(e_1);
+                    }
+
+                    ta2_3 = y + hr + ca + total_state + e_1;
                     var e_12 = 0;
                     var esic = 0;
                     var total_esic = 0;
-                    var e_12 = ta1 - ca;
+                    var e_12 = (ta2_3 - ca);
                     esic = e_12;
-                    if (esic < 21000) {
-                        total_esic = e_12 * (3.25 / 100) * 12;
+                    if (esic <= 21000) {
+                        total_esic = ((e_12 * (3.25 / 100)) * 12);
                         $("#ESIC").val(Math.round(total_esic));
                     } else {
                         total_esic = 0;
-                        $("#ESIC").val(Math.round(total_esic));
+                        $("#ESIC").val(Math.round(total_esic * 12));
                     }
 
 
@@ -344,6 +440,7 @@
                         console.log(e);
                     }
 
+
                     tb2 = tb12 / 12;
 
                     total2 = ta2 + tb2;
@@ -354,7 +451,12 @@
                     $("#hra").val(hr * 12);
                     $("#Conveyance_Allowance")
                         .val(ca * 12);
-                    $("#Statutory_Bonus").val(total_state * 12);
+                    if (y < 21000) {
+                        total_state = 0;
+                    } else {
+                        $("#Statutory_Bonus").val(total_state * 12);
+                    }
+
                     // $("#gratuity")
                     //     .val(Math.round(gt * 12));
                     $("#Total_B").val(Math.round(tb2 * 12));
@@ -386,23 +488,23 @@
         <div class="container">
             <div class="card" style=background-color:#BFD7ED>
                 <div class="card-body">
-                    <div style="text-align: center;">
-                        <select id="offer_select">
-                            <!-- <option>Choose Offer Letter</option> -->
-                            <option value="blue"><a href="">FTE</a></option>
-                            <!-- <option value="red" selected><a href="">PE E10 to S10</a></option>
+                    <div style="text-align: center;"><b>FTE</b>
+                        <!-- <select id="offer_select"> -->
+                        <!-- <option>Choose Offer Letter</option> -->
+                        <!-- <option value="blue"><a href="">FTE</a></option> -->
+                        <!-- <option value="red" selected><a href="">PE E10 to S10</a></option>
                             <option value="red" selected><a href="">PE (M10 & Above)</a></option>
                             
                             <option value="yellow"><a href="">CAMPUS</a></option>
                             <option value="yellow"><a href="">OFF CAMPUS</a></option> -->
-                        </select>
+                        <!-- </select> -->
                     </div>
                     <br />
                     <div class="green box">
                         <div class="row">
 
                             <div class="col-lg-6">
-                                <label=""><b>CODE</b></label>
+                                <label=""><b>Reference number of offer letter</b></label>
                                     <input type="text" class="form-control" id="Code" name="Code" placeholder="Code" />
                                     <br>
                                     <label="">Address Line 1</label>
@@ -413,20 +515,28 @@
                                             <input type="text" class="form-control" id="Ad3" name="Ad3"
                                                 placeholder="Address Line 3" />
                                             <br>
-                                            <label="">Pincode</label>
-                                                <input type="text" class="form-control" id="Pincode" name="Pincode"
-                                                    placeholder="Pincode" />
+                                            <label="">Work Location</label>
+                                                <input type="text" class="form-control" id="aloc" name="aloc"
+                                                    placeholder="Annexure Location" />
                                                 <br>
-                                                <label="">Start Date</label>
-                                                    <input type="date" class="form-control" id="Sd" name="Sd"
-                                                        placeholder="Start Date" />
+                                                <label="">Offer date</label>
+                                                    <input type="date" class="form-control" id="doj" name="doj"
+                                                        placeholder="DOJ" />
                                                     <br>
 
-                                                    <label="">Position</label>
-                                                        <input type="text" class="form-control" id="Position"
-                                                            name="Position" placeholder="Position" />
+                                                    <label="">End Date</label>
+                                                        <input type="date" class="form-control" id="ed" name="ed"
+                                                            placeholder="End Date" />
                                                         <br>
-                                                        <!-- <label=""><b>OLD CTC</b></label>
+
+
+                                                        <label="">Working End Day</label>
+                                                            <input type="text" class="form-control" id="wed" name="wed"
+                                                                placeholder="Working End Day" />
+                                                            <br>
+
+
+                                                            <!-- <label=""><b>OLD CTC</b></label>
                                                         <span id="hike" name="hike" class="badge badge-danger">
                                                             Hike % </span>
 
@@ -437,20 +547,17 @@
 
 
 
-                                                        <label=""><b>BASIC PERCENTAGE <small id="al1"
-                                                                    style="display:none;" class="badge badge-danger"> (
-                                                                    Enter %
-                                                                    between 5
-                                                                    to 50 )
-                                                                </small></b></label>
-                                                            <input type="number" class="form-control" id="basicp"
-                                                                name="basicp" placeholder="basicp" />
-                                                            <br>
-                                                            <label=""><b>State</b></label>
 
-                                                                <select id="state" name="state" class="custom-select">
-                                                                    <option selected>Select State</option>
-                                                                    <?php
+                                                            <label=""><b>TARGETED CTC</b></label>
+                                                                <input type="text" class="form-control" id="ctc"
+                                                                    name="ctc" placeholder="CTC" />
+                                                                <br>
+                                                                <label=""><b>State</b></label>
+
+                                                                    <select id="state" name="state"
+                                                                        class="custom-select">
+                                                                        <option selected>Select State</option>
+                                                                        <?php
 $g_sql = "SELECT DISTINCT COL_1 FROm stat";
 $g_result = $link->query($g_sql);
 if ($g_result->num_rows > 0) {
@@ -460,200 +567,30 @@ if ($g_result->num_rows > 0) {
 }
 
 ?>
-                                                                </select>
-                                                                <br><br>
+                                                                    </select>
+                                                                    <br><br>
 
-
-
-
-                                                                <label="">HRA</label>
-                                                                    <input type="text" class="form-control" id="hra"
-                                                                        name="hra" placeholder="hra" />
-                                                                    <br>
-                                                                    <label="">STATUTORY BONUS</label>
+                                                                    <label="">BASIC</label>
                                                                         <input type="text" class="form-control"
-                                                                            id="Statutory_Bonus" name="Statutory_Bonus"
-                                                                            placeholder="Statutory_Bonus" />
+                                                                            id="basic" name="basic"
+                                                                            placeholder="basic" />
                                                                         <br>
-                                                                        <label="">
-                                                                            <b>TOTAL
-                                                                                A</b></label>
+
+
+
+
+                                                                        <label="">CONVEYANCE ALLOWANCE</label>
                                                                             <input type="text" class="form-control"
-                                                                                id="Total_A" name="Total_A"
-                                                                                placeholder="Total_A" />
+                                                                                id="Conveyance_Allowance"
+                                                                                name="Conveyance_Allowance"
+                                                                                placeholder="Conveyance_Allowance" />
 
-                                                                            <br>
-
-
-
-                                                                            <!-- <label="">
-                                                                                            GRATUITY</label>
-                                                                                            <input type="text"
-                                                                                                class="form-control"
-                                                                                                id="gratuity"
-                                                                                                name="gratuity"
-                                                                                                placeholder="Gratuity" />
-
-                                                                                            <br> -->
-
-                                                                            <div>
-                                                                                <label="">
-                                                                                    ESIC</label>
-
-                                                                                    <input type="text"
-                                                                                        class="form-control" id="ESIC"
-                                                                                        name="ESIC"
-                                                                                        placeholder="ESIC" />
-                                                                            </div>
-
-
-                                                                            <br>
-
-
-                                                                            <!-- <label="">
-                                                                                                    <b>STRB</b></label>
-                                                                                                    <input type="text"
-                                                                                                        class="form-control"
-                                                                                                        id="STRB"
-                                                                                                        name="STRB"
-                                                                                                        placeholder="STRB" />
-                                                                                                    <br> -->
-                                                                            <!-- <label="">
-                                                                                                        <b>TOTAL
-                                                                                                            OF
-                                                                                                            PART
-                                                                                                            II</b>
-                                                                                                        </label>
-                                                                                                        <input
-                                                                                                            type="text"
-                                                                                                            class="form-control"
-                                                                                                            id="Total_II"
-                                                                                                            name="Total_II"
-                                                                                                            placeholder="TOTAL OF PART II" />
-                                                                                                        <br> -->
-                                                                            <label="">
-                                                                                <b>TOTAL
-                                                                                    OF
-                                                                                    PART
-                                                                                    I(A+B)</b></label>
-                                                                                <input type="text" class="form-control"
-                                                                                    id="LTotal" name="LTotal"
-                                                                                    placeholder="Total A+B" />
-
-                                                                                <br>
-
-
-                                                                                <script type="text/javascript">
-                                                                                function ShowHideDiv() {
-                                                                                    var chkYes = document
-                                                                                        .getElementById("chkYes");
-                                                                                    var jbamount = document
-                                                                                        .getElementById("jbamount");
-                                                                                    jbamount.style.display = chkYes
-                                                                                        .checked ? "block" : "none";
-                                                                                }
-                                                                                </script>
-                                                                                <span>Joining Bonus</span>
-                                                                                <label for="chkYes">
-                                                                                    <input type="radio" id="chkYes"
-                                                                                        name="chkPassPort" value="yes"
-                                                                                        onclick="ShowHideDiv()" />
-                                                                                    Yes
-                                                                                </label>
-                                                                                <label for="chkNo">
-                                                                                    <input type="radio" id="chkNo"
-                                                                                        name="chkPassPort" value="no"
-                                                                                        onclick="ShowHideDiv()" />
-                                                                                    No
-                                                                                </label>
-                                                                                <hr />
-                                                                                <div id="jbamount"
-                                                                                    style="display: none">
-                                                                                    Joining Bonus :
-                                                                                    <input type="text" id="jbamount" />
-                                                                                </div>
-
-                                                                                <br>
-
-
-
-                            </div>
-
-
-                            <div class="col-lg-6">
-
-                                <label="">Name</label>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Name" />
-                                    <br>
-                                    <label="">Address Line2</label>
-                                        <input type="text" class="form-control" id="Ad2" name="Ad2"
-                                            placeholder="Address Line 2" />
-                                        <br>
-                                        <label="">City</label>
-                                            <input type="text" class="form-control" id="City" name="City"
-                                                placeholder="City" />
-                                            <br>
-
-
-                                            <label="">DOJ</label>
-                                                <input type="date" class="form-control" id="doj" name="doj"
-                                                    placeholder="DOJ" />
-                                                <br>
-
-                                                <label="">End Date</label>
-                                                    <input type="date" class="form-control" id="ed" name="ed"
-                                                        placeholder="End Date" />
-                                                    <br>
-
-
-                                                    <label=""><b>TARGETED CTC</b></label>
-                                                        <input type="text" class="form-control" id="ctc" name="ctc"
-                                                            placeholder="CTC" />
-                                                        <br>
-
-                                                        <label=""><b>GRADE</b></label>
-
-                                                            <input type="text" class="form-control" id="grade"
-                                                                name="grade" placeholder="F00" />
-
-                                                            <br>
-
-
-                                                            <!-- <label=""><b>VARIABLE
-                                                                PAY
-                                                                PERCENATGE<small id="al2" style="display:none;"
-                                                                    class="badge badge-danger">
-                                                                    ( Enter %
-                                                                    between 5
-                                                                    to 50 )
-                                                                </small></b></label>
-                                                            <input type="number" class="form-control" id="vpp1"
-                                                                name="vpp1" placeholder="VARIABLE PAY" />
-
-
-
-                                                            <br>  -->
-
-                                                            <label="">BASIC</label>
-                                                                <input type="text" class="form-control" id="basic"
-                                                                    name="basic" placeholder="basic" readonly />
-                                                                <br>
-
-
-
-
-                                                                <label="">CONVEYANCE ALLOWANCE</label>
-                                                                    <input type="text" class="form-control"
-                                                                        id="Conveyance_Allowance"
-                                                                        name="Conveyance_Allowance"
-                                                                        placeholder="Conveyance_Allowance" />
-
-                                                                    <!-- <label="">LTA</label>
+                                                                            <!-- <label="">LTA</label>
                                                                         <input type="text" class="form-control" id="lta"
                                                                             name="lta" placeholder="LTA" />
                                                                         <br> -->
 
-                                                                    <!-- <label="">EXECUTIVE
+                                                                            <!-- <label="">EXECUTIVE
                                                                                 ALLOWANCE OLD VALUE</label>
 
 
@@ -665,9 +602,9 @@ if ($g_result->num_rows > 0) {
 
 
 
-                                                                    <!-- <br> -->
+                                                                            <!-- <br> -->
 
-                                                                    <!-- <label="">FOOD
+                                                                            <!-- <label="">FOOD
                                                                             ALLOWANCE</label>
                                                                             <input type="text" class="form-control"
                                                                                 id="Food_Allowance"
@@ -676,7 +613,7 @@ if ($g_result->num_rows > 0) {
 
                                                                             <br> -->
 
-                                                                    <!-- 
+                                                                            <!-- 
                                                                             <label="">ATTIRE
                                                                                 ALLOWANCE</label>
                                                                                 <input type="text" class="form-control"
@@ -693,20 +630,21 @@ if ($g_result->num_rows > 0) {
                                                                                         name="driver_reimbursement"
                                                                                         placeholder="DRIVER REIMBURSEMENT" /> -->
 
-                                                                    <br>
-                                                                    <label="">EXECUTIVE
-                                                                        ALLOWANCE</label>
-                                                                        <span id="OEAV" class="badge badge-danger">
-                                                                            Old Value : 0</span>
-                                                                        <input type="text" class="form-control"
-                                                                            id="Executive_Allowance"
-                                                                            name="Executive_Allowance"
-                                                                            placeholder="Executive_Allowance" />
+                                                                            <br>
+                                                                            <label="">EXECUTIVE
+                                                                                ALLOWANCE</label>
+                                                                                <span id="OEAV"
+                                                                                    class="badge badge-danger">
+                                                                                    Old Value : 0</span>
+                                                                                <input type="text" class="form-control"
+                                                                                    id="Executive_Allowance"
+                                                                                    name="Executive_Allowance"
+                                                                                    placeholder="Executive_Allowance" />
 
-                                                                        <br>
+                                                                                <br>
 
 
-                                                                        <!-- <label="">MOBILE
+                                                                                <!-- <label="">MOBILE
                                                                                 CHARGES
                                                                                 REIMBURSEMENT</label>
                                                                                 <input type="text" class="form-control"
@@ -715,7 +653,7 @@ if ($g_result->num_rows > 0) {
 
                                                                                 <br> -->
 
-                                                                        <!-- <label="">
+                                                                                <!-- <label="">
                                                                                     VEHICLE
                                                                                     REIMBURSEMENT</label>
                                                                                     <input type="text"
@@ -741,15 +679,16 @@ if ($g_result->num_rows > 0) {
 
 
 
-                                                                        <label="">
-                                                                            PF</label>
-                                                                            <input type="text" class="form-control"
-                                                                                id="PF" name="PF" placeholder="PF" />
+                                                                                <label="">
+                                                                                    PF</label>
+                                                                                    <input type="text"
+                                                                                        class="form-control" id="PF"
+                                                                                        name="PF" placeholder="PF" />
 
-                                                                            <br>
+                                                                                    <br>
 
 
-                                                                            <!-- <div class="row">
+                                                                                    <!-- <div class="row">
                                                                                                     <div
                                                                                                         class="col-lg-6">
                                                                                                         <label="">
@@ -818,7 +757,7 @@ if ($g_result->num_rows > 0) {
 
 
 
-                                                                            <!-- 
+                                                                                    <!-- 
 
                                                                                                 <b>Retention
                                                                                                     Bonus</b></label>
@@ -827,29 +766,235 @@ if ($g_result->num_rows > 0) {
                                                                                                     id="RB" name="RB"
                                                                                                     placeholder="RB" />
                                                                                                 <br> -->
+                                                                                    <label="">
+                                                                                        <b>TOTAL
+                                                                                            B</b></label>
+                                                                                        <input type="text"
+                                                                                            class="form-control"
+                                                                                            id="Total_B" name="Total_B"
+                                                                                            placeholder="Total_B" />
+                                                                                        <br>
+
+
+
+                                                                                        <label><b>COST
+                                                                                                TO
+                                                                                                COMPANY
+                                                                                                (PART
+                                                                                                I
+                                                                                                +
+                                                                                                PART
+                                                                                                II)</b>
+                                                                                        </label>
+                                                                                        <input type="text"
+                                                                                            class="form-control"
+                                                                                            id="TOTAL" name="TOTAL"
+                                                                                            placeholder=" COST TO COMPANY (PART I+ PART II" />
+                                                                                        <br>
+
+
+
+
+
+
+                            </div>
+
+
+                            <div class="col-lg-6">
+
+                                <label="">Name</label>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Name" />
+                                    <br>
+                                    <label="">Address Line2</label>
+                                        <input type="text" class="form-control" id="Ad2" name="Ad2"
+                                            placeholder="Address Line 2" />
+                                        <br>
+                                        <label="">City</label>
+                                            <input type="text" class="form-control" id="City" name="City"
+                                                placeholder="City" />
+                                            <br>
+                                            <label="">Pincode</label>
+                                                <input type="text" class="form-control" id="Pincode" name="Pincode"
+                                                    placeholder="Pincode" />
+                                                <br>
+
+                                                <label="">Start Date</label>
+                                                    <input type="date" class="form-control" id="Sd" name="Sd"
+                                                        placeholder="Start Date" />
+                                                    <br>
+
+
+                                                    <label="">Working Start Day</label>
+                                                        <input type="text" class="form-control" id="wsd" name="wsd"
+                                                            placeholder="Working Start Day" />
+                                                        <br>
+                                                        <label="">Position</label>
+                                                            <input type="text" class="form-control" id="Position"
+                                                                name="Position" placeholder="Position" />
+                                                            <br>
+                                                            <label=""><b>BASIC PERCENTAGE <small id="al1"
+                                                                        style="display:none;"
+                                                                        class="badge badge-danger"> (
+                                                                        Enter %
+                                                                        between 5
+                                                                        to 50 )
+                                                                    </small></b></label>
+                                                                <input type="number" class="form-control" id="basicp"
+                                                                    name="basicp" placeholder="basicp" />
+                                                                <br>
+
+                                                                <label=""><b>GRADE</b></label>
+
+                                                                    <input type="text" class="form-control" id="grade"
+                                                                        name="grade" placeholder="F00" />
+
+                                                                    <br>
+
+
+                                                                    <!-- <label=""><b>VARIABLE
+                                                                PAY
+                                                                PERCENATGE<small id="al2" style="display:none;"
+                                                                    class="badge badge-danger">
+                                                                    ( Enter %
+                                                                    between 5
+                                                                    to 50 )
+                                                                </small></b></label>
+                                                            <input type="number" class="form-control" id="vpp1"
+                                                                name="vpp1" placeholder="VARIABLE PAY" />
+
+
+
+                                                            <br>  -->
+                                                                    <label="">HRA</label>
+                                                                        <input type="text" class="form-control" id="hra"
+                                                                            name="hra" placeholder="hra" />
+                                                                        <br>
+                                                                        <label="">STATUTORY
+                                                                            BONUS</label>
+                                                                            <input type="text" class="form-control"
+                                                                                id="Statutory_Bonus"
+                                                                                name="Statutory_Bonus"
+                                                                                placeholder="Statutory_Bonus" />
+                                                                            <br>
                                                                             <label="">
                                                                                 <b>TOTAL
-                                                                                    B</b></label>
+                                                                                    A</b></label>
                                                                                 <input type="text" class="form-control"
-                                                                                    id="Total_B" name="Total_B"
-                                                                                    placeholder="Total_B" />
+                                                                                    id="Total_A" name="Total_A"
+                                                                                    placeholder="Total_A" />
+
                                                                                 <br>
 
 
 
-                                                                                <label><b>COST
-                                                                                        TO
-                                                                                        COMPANY
-                                                                                        (PART
-                                                                                        I
-                                                                                        +
+                                                                                <!-- <label="">
+                                                                                            GRATUITY</label>
+                                                                                            <input type="text"
+                                                                                                class="form-control"
+                                                                                                id="gratuity"
+                                                                                                name="gratuity"
+                                                                                                placeholder="Gratuity" />
+
+                                                                                            <br> -->
+
+                                                                                <div>
+                                                                                    <label="">
+                                                                                        ESIC</label>
+
+                                                                                        <input type="text"
+                                                                                            class="form-control"
+                                                                                            id="ESIC" name="ESIC"
+                                                                                            placeholder="ESIC" />
+                                                                                </div>
+
+
+                                                                                <br>
+
+
+                                                                                <!-- <label="">
+                                                                                                    <b>STRB</b></label>
+                                                                                                    <input type="text"
+                                                                                                        class="form-control"
+                                                                                                        id="STRB"
+                                                                                                        name="STRB"
+                                                                                                        placeholder="STRB" />
+                                                                                                    <br> -->
+                                                                                <!-- <label="">
+                                                                                                        <b>TOTAL
+                                                                                                            OF
+                                                                                                            PART
+                                                                                                            II</b>
+                                                                                                        </label>
+                                                                                                        <input
+                                                                                                            type="text"
+                                                                                                            class="form-control"
+                                                                                                            id="Total_II"
+                                                                                                            name="Total_II"
+                                                                                                            placeholder="TOTAL OF PART II" />
+                                                                                                        <br> -->
+                                                                                <label="">
+                                                                                    <b>TOTAL
+                                                                                        OF
                                                                                         PART
-                                                                                        II)</b>
-                                                                                </label>
-                                                                                <input type="text" class="form-control"
-                                                                                    id="TOTAL" name="TOTAL"
-                                                                                    placeholder=" COST TO COMPANY (PART I+ PART II" />
-                                                                                <br>
+                                                                                        I(A+B)</b></label>
+                                                                                    <input type="text"
+                                                                                        class="form-control" id="LTotal"
+                                                                                        name="LTotal"
+                                                                                        placeholder="Total A+B" />
+
+                                                                                    <br>
+
+                                                                                    <br><br>
+                                                                                    <script type="text/javascript">
+                                                                                    function ShowHideDiv() {
+                                                                                        var chkYes =
+                                                                                            document
+                                                                                            .getElementById(
+                                                                                                "chkYes"
+                                                                                            );
+                                                                                        var jbamount =
+                                                                                            document
+                                                                                            .getElementById(
+                                                                                                "jbamount"
+                                                                                            );
+                                                                                        jbamount
+                                                                                            .style
+                                                                                            .display =
+                                                                                            chkYes
+                                                                                            .checked ?
+                                                                                            "block" :
+                                                                                            "none";
+                                                                                    }
+                                                                                    </script>
+
+                                                                                    <span>Joining
+                                                                                        Bonus</span>
+                                                                                    <label for="chkYes">
+                                                                                        <input type="radio" id="chkYes"
+                                                                                            name="chkPassPort"
+                                                                                            value="yes"
+                                                                                            onclick="ShowHideDiv()" />
+                                                                                        Yes
+                                                                                    </label>
+                                                                                    <label for="chkNo">
+                                                                                        <input type="radio" id="chkNo"
+                                                                                            name="chkPassPort"
+                                                                                            value="no"
+                                                                                            onclick="ShowHideDiv()" />
+                                                                                        No
+                                                                                    </label>
+                                                                                    <hr />
+                                                                                    <div id="jbamount"
+                                                                                        style="display: none">
+                                                                                        Joining
+                                                                                        Bonus :
+                                                                                        <input type="text"
+                                                                                            name="jbamount"
+                                                                                            id="jbamount" />
+                                                                                    </div>
+
+                                                                                    <br>
+
 
 
 
@@ -859,7 +1004,6 @@ if ($g_result->num_rows > 0) {
                             </div>
                         </div>
                         <div class="row">
-
                             <div class="col-lg-6"><input type="submit" name="submit" value="Export to PDF"></div>
                             <!-- <div class="col-lg-6"><a href="doc2.php">Export to Word</a></div> -->
 
