@@ -70,11 +70,11 @@
 
     $(document).ready(function() {
 
-        $("#Retention_Allowance").on("keyup", function() {
-            mra = $("#Retention_Allowance").val();
-            flag = 1;
-            basic_pay_ch();
-        });
+        // $("#Retention_Allowance").on("keyup", function() {
+        //     mra = $("#Retention_Allowance").val();
+        //     flag = 1;
+        //     basic_pay_ch();
+        // });
         if (y < 21000) {
             $("#state").on("change", function() {
                 var state = $("#state").val();
@@ -259,77 +259,86 @@
 
                     if (yflag == 0) {
                         hr = y / 2;
+                        ca = 1600;
+                        ta1 = y + hr + ca + total_state;
+                        alert(ta1 * 12);
+                        var y_12 = y;
+                        var total_y_12 = 0;
+                        var pf = 0;
+                        var pf1 = 0;
+                        var y_121 = 0;
+                        if (y_12 > 15000) {
+                            total_y_12 = y_12 * (12 / 100);
+                            pf = total_y_12 * 12;
+                            pf1 = pf;
+                            pf = pf1;
+                            $("#PF").val(Math.round(pf));
+
+                        } else {
+                            y_121 = ta1 - hr;
+                            if (y_121 > 15000) {
+                                y_12 = 1800;
+                                total_y_12 = y_12;
+                                pf = total_y_12 * 12;
+                                pf1 = pf;
+                                pf = pf1;
+                                $("#PF").val(Math.round(pf));
+                            } else {
+                                total_y_12 = y_121 * (12 / 100);
+                                pf = total_y_12 * 12;
+                                pf1 = pf;
+                                pf = pf1;
+                                $("#PF").val(Math.round(pf));
+
+
+                            }
+
+                        }
                     }
                     if (yflag == 1) {
                         y = rechange_y;
                         hr = y / 2;
-                    }
-
-
-                    ca = 1600;
-                    if (y < 21000) {
-
-                        if (flag == 0) {
-                            ta1 = y + hr + ca + total_state;
-                        }
-                        if (flag == 1) {
-                            ra = parseInt(mra);
-                            var ct = 0,
-                                ct1 = 0;
-                            ct = Math.floor(ra / 12);
-
-                            ta1 = y + hr + ca + total_state;
-                        }
-                    } else {
-                        if (flag == 0) {
-                            ta1 = y + hr + ca;
-                        }
-                        if (flag == 1) {
-                            ra = parseInt(mra);
-                            var ct = 0,
-                                ct1 = 0;
-                            ct = Math.floor(ra / 12);
-
-                            ta1 = y + hr + ca;
-                        }
-                    }
-
-
-
-                    var y_12 = y;
-                    var total_y_12 = 0;
-                    var pf = 0;
-                    var pf1 = 0;
-                    var y_121 = 0;
-                    if (y_12 > 15000) {
-                        total_y_12 = y_12 * (12 / 100);
-                        pf = total_y_12 * 12;
-                        pf1 = pf;
-                        pf = pf1;
-                        $("#PF").val(Math.round(pf));
-
-                    } else {
-                        y_121 = ta1 - hr;
-                        if (y_121 > 15000) {
-                            y_12 = 1800;
-                            total_y_12 = y_12;
+                        ca = 1600;
+                        ta1 = y + hr + ca + total_state;
+                        alert(ta1 * 12);
+                        var y_12 = y;
+                        var total_y_12 = 0;
+                        var pf = 0;
+                        var pf1 = 0;
+                        var y_121 = 0;
+                        if (y_12 > 15000) {
+                            total_y_12 = y_12 * (12 / 100);
                             pf = total_y_12 * 12;
                             pf1 = pf;
                             pf = pf1;
                             $("#PF").val(Math.round(pf));
+
                         } else {
-                            total_y_12 = y_121 * (12 / 100);
-                            pf = total_y_12 * 12;
-                            pf1 = pf;
-                            pf = pf1;
-                            $("#PF").val(Math.round(pf));
+                            y_121 = ta1 - hr;
+                            if (y_121 > 15000) {
+                                total_y_12 = y_121 * (12 / 100);
+                                pf = total_y_12 * 12;
+                                pf1 = pf;
+                                pf = pf1;
+                                $("#PF").val(Math.round(pf));
+                            } else {
+                                y_12 = 1800;
+                                total_y_12 = y_12;
+                                pf = total_y_12 * 12;
+                                pf1 = pf;
+                                pf = pf1;
+                                $("#PF").val(Math.round(pf));
 
+
+
+
+
+                            }
 
                         }
-
                     }
 
-                    // gt = (y / 12);
+
 
                     var e_12_1 = 0;
                     var esic_1 = 0;

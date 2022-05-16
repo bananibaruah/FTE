@@ -226,7 +226,7 @@ Details of your salary break up with components are as per the Annexure I attach
 This contract shall be terminable by either party giving 30 days notice in writing or salary in lieu of notice to the other party.<br><br>
 In addition to the terms of appointment mentioned in this letter you are also governed by the terms and conditions of the company, which are attached to this letter. The combined rules and procedures as contained in this letter and the annexure will constitute the employment rules and you are required to read both of them in conjunction.	<br><br>
 As a token of your understanding and acceptance of the terms and conditions you are requested to sign the duplicate copy of this letter and return it within a day, failing which this offer stands withdrawn. <br><br>
-You are required to report for duty on <b>$doj1</b> not later than <b>9.30 a.m</b>.  If you do not join by this date then this offer would automatically stand withdrawn, unless the date of joining is revised and is communicated to you in writing.<br><br>
+You are required to report for duty on <b>$Sd1</b> not later than <b>9.30 a.m</b>.  If you do not join by this date then this offer would automatically stand withdrawn, unless the date of joining is revised and is communicated to you in writing.<br><br>
 Note: This offer made to you is on the basis of the details declared by you in the Employment Application Form (EAF). In case of any discrepancies found in the EAF the said offer will stand null and void with immediate effect.
 Wishing you the very best for your assignment with us.<br><br>
 Yours sincerely,<br>
@@ -265,7 +265,7 @@ Details of your salary break up with components are as per the Annexure I attach
 This contract shall be terminable by either party giving 30 days notice in writing or salary in lieu of notice to the other party.<br><br>
 In addition to the terms of appointment mentioned in this letter you are also governed by the terms and conditions of the company, which are attached to this letter. The combined rules and procedures as contained in this letter and the annexure will constitute the employment rules and you are required to read both of them in conjunction.	<br><br>
 As a token of your understanding and acceptance of the terms and conditions you are requested to sign the duplicate copy of this letter and return it within a day, failing which this offer stands withdrawn. <br><br>
-You are required to report for duty on <b>$doj1</b> not later than <b>9.30 a.m</b>.  If you do not join by this date then this offer would automatically stand withdrawn, unless the date of joining is revised and is communicated to you in writing.<br><br>
+You are required to report for duty on <b>$Sd1</b> not later than <b>9.30 a.m</b>.  If you do not join by this date then this offer would automatically stand withdrawn, unless the date of joining is revised and is communicated to you in writing.<br><br>
 Note: This offer made to you is on the basis of the details declared by you in the Employment Application Form (EAF). In case of any discrepancies found in the EAF the said offer will stand null and void with immediate effect.
 Wishing you the very best for your assignment with us.<br><br>
 Yours sincerely,<br>
@@ -300,7 +300,7 @@ You will be on probation for a period of 3 months from your date of joining.<br>
 
 
 
-<b>3.	Remuneration:</b><br>:';
+<b>3.	Remuneration:</b><br>';
 if ($chkPassPort == "no") 
 {
     $html .= 'Your salary and allowances will be as per the details attached to this letter and marked as Annexure I.';
