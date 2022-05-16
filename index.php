@@ -261,7 +261,7 @@
                         hr = y / 2;
                         ca = 1600;
                         ta1 = y + hr + ca + total_state;
-                        alert(ta1 * 12);
+                        // alert(ta1 * 12);
                         var y_12 = y;
                         var total_y_12 = 0;
                         var pf = 0;
@@ -300,7 +300,7 @@
                         hr = y / 2;
                         ca = 1600;
                         ta1 = y + hr + ca + total_state;
-                        alert(ta1 * 12);
+                        // alert(ta1 * 12);
                         var y_12 = y;
                         var total_y_12 = 0;
                         var pf = 0;

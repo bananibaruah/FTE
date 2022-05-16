@@ -308,8 +308,7 @@ if ($chkPassPort == "no")
 }
 if ($chkPassPort == "yes") 
 {
-    $html .= 'Your salary and allowances will be as per the details attached to this letter and marked as Annexure I. 
-    In addition to the compensation package detailed in Annexure I, you will be eligible to receive a total amount of
+    $html .= 'Your salary and allowances will be as per the details attached to this letter and marked as Annexure I.<br>In addition to the compensation package detailed in Annexure I, you will be eligible to receive a total amount of
     <b>' . $jbamount . '</b> as a part of a Joining Bonus only if you join the company on or before <b>' . $Sd1 . '</b>
     (TDS would be deducted as applicable on the said amount.) In the event that you cease to be in the employment of 
     the company within 12 months of your joining date, you shall pay back the entire amount paid to you as a Joining Bonus. 
