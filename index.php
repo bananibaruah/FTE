@@ -301,37 +301,34 @@
                         ca = 1600;
                         ta1 = y + hr + ca + total_state;
                         // alert(ta1 * 12);
-                        var y_12 = y;
-                        var total_y_12 = 0;
-                        var pf = 0;
+                        var y_121 = y;
+                        var total_y_121 = 0;
                         var pf1 = 0;
-                        var y_121 = 0;
-                        if (y_12 > 15000) {
-                            total_y_12 = y_12 * (12 / 100);
-                            pf = total_y_12 * 12;
-                            pf1 = pf;
-                            pf = pf1;
-                            $("#PF").val(Math.round(pf));
+                        var pf12 = 0;
+                        var y_1211 = 0;
+                        if (y_121 > 15000) {
+                            total_y_121 = y_121 * (12 / 100);
+                            pf1 = total_y_121 * 12;
+                            pf12 = pf1;
+                            pf1 = pf12;
+                            // $("#PF").val(Math.round(pf1));
 
                         } else {
-                            y_121 = ta1 - hr;
-                            if (y_121 > 15000) {
-                                total_y_12 = y_121 * (12 / 100);
-                                pf = total_y_12 * 12;
-                                pf1 = pf;
-                                pf = pf1;
-                                $("#PF").val(Math.round(pf));
+                            y_1211 = ta1 - hr;
+                            if (y_1211 > 15000) {
+                                y_121 = 1800;
+                                total_y_121 = y_121;
+                                pf1 = total_y_121 * 12;
+                                pf11 = pf1;
+                                pf1 = pf12;
+                                // $("#PF").val(Math.round(pf));
                             } else {
-                                y_12 = 1800;
-                                total_y_12 = y_12;
-                                pf = total_y_12 * 12;
-                                pf1 = pf;
-                                pf = pf1;
-                                $("#PF").val(Math.round(pf));
 
-
-
-
+                                total_y_121 = y_1211 * (12 / 100);
+                                pf1 = total_y_121 * 12;
+                                pf11 = pf1;
+                                pf1 = pf12;
+                                // $("#PF").val(Math.round(pf));
 
                             }
 
@@ -449,10 +446,49 @@
                         console.log(e);
                     }
 
+                    if (yflag == 1) {
+                        y = rechange_y;
+                        hr = y / 2;
+                        ca = 1600;
+                        ta1 = y + hr + ca + total_state + e;
+                        // alert(ta1 * 12);
+                        var y_12 = y;
+                        var total_y_12 = 0;
+                        var pf = 0;
+                        var pf1 = 0;
+                        var y_121 = 0;
+                        if (y_12 > 15000) {
+                            total_y_12 = y_12 * (12 / 100);
+                            pf = total_y_12 * 12;
+                            pf1 = pf;
+                            pf = pf1;
+                            $("#PF").val(Math.round(pf));
 
-                    tb2 = tb12 / 12;
+                        } else {
+                            y_121 = ta2 - hr;
+                            if (y_121 > 15000) {
+                                y_12 = 1800;
+                                total_y_12 = y_12;
+                                pf = total_y_12 * 12;
+                                pf1 = pf;
+                                pf = pf1;
+                                $("#PF").val(Math.round(pf));
+                            } else {
 
-                    total2 = ta2 + tb2;
+                                total_y_12 = y_121 * (12 / 100);
+                                pf = total_y_12 * 12;
+                                pf1 = pf;
+                                pf = pf1;
+                                $("#PF").val(Math.round(pf));
+
+                            }
+
+                        }
+                    }
+
+                    tb2 = pf + total_esic;
+
+                    total2 = (ta2 * 12) + tb2;
 
                     ctotal = total2;
 
@@ -468,12 +504,12 @@
 
                     // $("#gratuity")
                     //     .val(Math.round(gt * 12));
-                    $("#Total_B").val(Math.round(tb2 * 12));
+                    $("#Total_B").val(Math.round(tb2));
                     $("#Executive_Allowance").val(Math.round(e * 12));
                     //$("#Retention_Allowance").val(ra * 12);
                     $("#Total_A").val(Math.round(ta2 * 12));
-                    $("#LTotal").val(Math.round(total2 * 12));
-                    $("#TOTAL").val(Math.round(ctotal * 12));
+                    $("#LTotal").val(Math.round(total2));
+                    $("#TOTAL").val(Math.round(ctotal));
                     // $("#Old_Retention_Allowance").val(ra * 12);
 
 
