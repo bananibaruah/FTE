@@ -98,7 +98,9 @@ function CurrencyFormat($number)
     $decimalplaces = 2;
     $decimalcharacter = '.';
     $thousandseparater = ',';
-    return number_format($number, $decimalplaces, $decimalcharacter, $thousandseparater);
+    $lakhseparater = ',';
+
+    return number_format($number, $decimalplaces, $decimalcharacter, $thousandseparater, $lakhseparater);
 }
 
 // echo $doj1;
@@ -304,6 +306,8 @@ You will be on probation for a period of 3 months from your date of joining.<br>
 if ($chkPassPort == "no") 
 {
     $html .= 'Your salary and allowances will be as per the details attached to this letter and marked as Annexure I.';
+
+
     $html .= '<br><br><br>';
 }
 if ($chkPassPort == "yes") 
@@ -414,42 +418,42 @@ $html .= '<br>' . $name . '<br><br><br>
     <tr>
         <td><b></b></td>
         <td>&nbsp; &nbsp; &nbsp;Basic</td>
-		<td style="text-align: right;">' . number_format((int)$basic1) . '</td>
-		<td style="text-align: right;">' . number_format((int)$basic) . '</td>
+		<td style="text-align: right;">' . preg_replace("/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/i", "$1,", $basic1) . '</td>
+		<td style="text-align: right;">' . preg_replace("/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/i", "$1,", $basic) . '</td>
     </tr>
     <tr>
         <td><b></b></td>
         <td>&nbsp; &nbsp; &nbsp;HRA</td>
-        <td style="text-align: right;">' . number_format((int)$hra1) . '</td>
-        <td style="text-align: right;">' . number_format((int)$hra) . '</td>
+        <td style="text-align: right;">' . preg_replace("/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/i", "$1,", $hra1) . '</td>
+        <td style="text-align: right;">' . preg_replace("/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/i", "$1,", $hra) . '</td>
     </tr>
     <tr>
         <td><b></b></td>
         <td>&nbsp; &nbsp; &nbsp;Conveyance Allowance</td>
-		<td style="text-align: right;">' . number_format((int)$Conveyance_Allowance1) . '</td>
-		<td style="text-align: right;">' . number_format((int)$Conveyance_Allowance) . '</td>
+		<td style="text-align: right;">' . preg_replace("/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/i", "$1,", $Conveyance_Allowance1) . '</td>
+		<td style="text-align: right;">' . preg_replace("/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/i", "$1,", $Conveyance_Allowance) . '</td>
     </tr>
     <tr>
         <td><b></b></td>
         <td>&nbsp; &nbsp; &nbsp;Statutory Bonus</td>
-		<td style="text-align: right;">' . number_format((int)$Statutory_Bonus1) . '</td>
-		<td style="text-align: right;">' . number_format((int)$Statutory_Bonus) . '</td>
+		<td style="text-align: right;">' . preg_replace("/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/i", "$1,", $Statutory_Bonus1) . '</td>
+		<td style="text-align: right;">' . preg_replace("/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/i", "$1,", $Statutory_Bonus) . '</td>
     </tr>';
 
 
 $html .= '<tr>
     <td><b></b></td>
         <td>&nbsp; &nbsp; &nbsp;Executive Allowance</td>
-        <td style="text-align: right;">' . number_format((int)$Executive_Allowance1) . '</td>
-        <td style="text-align: right;">' . number_format((int)$Executive_Allowance) . '</td>
+        <td style="text-align: right;">' . preg_replace("/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/i", "$1,", $Executive_Allowance1) . '</td>
+        <td style="text-align: right;">' . preg_replace("/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/i", "$1,", $Executive_Allowance) . '</td>
     </tr>';
 
 
 $html .= '<tr>
         <td><b></b></td>
         <td><b>&nbsp; &nbsp; &nbsp;Total A</b></td>
-		<td style="text-align: right;"><b>' . number_format((int)$Total_A1) . '</b></td>
-		<td style="text-align: right;"><b>' . number_format((int)$Total_A) . '</b></td>
+		<td style="text-align: right;"><b>' . preg_replace("/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/i", "$1,", $Total_A1) . '</b></td>
+		<td style="text-align: right;"><b>' . preg_replace("/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/i", "$1,", $Total_A) . '</b></td>
     </tr>
     <tr>
         <td><b>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;B</b></td>
@@ -460,8 +464,8 @@ $html .= '<tr>
     <tr>
         <td><b></b></td>
         <td>&nbsp; &nbsp; &nbsp;Employer Contribution to Provident Fund </td>
-		<td style="text-align: right;">' . number_format((int)$PF1) . '</td>
-		<td style="text-align: right;">' . number_format((int)$PF) . '</td>
+		<td style="text-align: right;">' . preg_replace("/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/i", "$1,", $PF1) . '</td>
+		<td style="text-align: right;">' . preg_replace("/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/i", "$1,", $PF) . '</td>
     </tr>';
 
 
@@ -469,29 +473,29 @@ if ($ESIC != 0) {
     $html .= '<tr>
         <td><b></b></td>
         <td>&nbsp; &nbsp; &nbsp;ESIC</td>
-		<td style="text-align: right;">' . number_format((int)$ESIC1) . '</td>
-		<td style="text-align: right;">' . number_format((int)$ESIC) . '</td>
+		<td style="text-align: right;">' . preg_replace("/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/i", "$1,", $ESIC1) . '</td>
+		<td style="text-align: right;">' . preg_replace("/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/i", "$1,", $ESIC) . '</td>
     </tr>';
 }
 
 $html .= '<tr>
         <td><b></b></td>
         <td><b>&nbsp; &nbsp; &nbsp;Total B</b></td>
-		<td style="text-align: right;"><b>' . number_format((int)$Total_B1) . '</b></td>
-		<td style="text-align: right;"><b>' . number_format((int)$Total_B) . '</b></td>
+		<td style="text-align: right;"><b>' . preg_replace("/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/i", "$1,", $Total_B1) . '</b></td>
+		<td style="text-align: right;"><b>' . preg_replace("/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/i", "$1,", $Total_B) . '</b></td>
     </tr>
     <tr>
         <td><b></b></td>
         <td><b>&nbsp; &nbsp; &nbsp;Total of PART I (A+B)</b>  </td>
-		<td style="text-align: right;"><b>' . number_format((int)$LTOTAL1) . '</b></td>
-		<td style="text-align: right;"><b>' . number_format((int)$LTOTAL) . '</b></td>
+		<td style="text-align: right;"><b>' . preg_replace("/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/i", "$1,", $TOTAL1) . '</b></td>
+		<td style="text-align: right;"><b>' . preg_replace("/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/i", "$1,", $LTOTAL) . '</b></td>
     </tr>  
    
     <tr>
     <td><b></b></td>
         <td><b> &nbsp; &nbsp; &nbsp;Cost to Company PART I (A + B) </b>  </td>
         <td><b></b></td>
-        <td style="text-align: right;"><b>' . number_format((int)$TOTAL) . '</b></td>
+        <td style="text-align: right;"><b>' . preg_replace("/(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/i", "$1,", $TOTAL) . '</b></td>
     </tr>
     <tr>
         <td colspan="4"><b>&nbsp; &nbsp; Please note: </b></td>
