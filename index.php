@@ -65,6 +65,7 @@
         eflag = 0,
         yflag = 0;
     rechange_e = 0, rechange_y = 0;
+    caflag = 0, rechange_ca = 0;
 
 
 
@@ -238,6 +239,12 @@
             yflag = 1;
             basic_pay_ch();
         });
+        $("#Conveyance_Allowance").on('change', function() {
+            rechange_ca = $("#Conveyance_Allowance").val();
+            rechange_ca = (rechange_ca / 12);
+            caflag = 1;
+            basic_pay_ch();
+        });
 
     });
 
@@ -260,7 +267,14 @@
                     if (yflag == 0) {
                         hr = y / 2;
                         ca = 1600;
-                        ta1 = y + hr + ca + total_state;
+                        if (caflag == 0) {
+                            ta1 = y + hr + ca + total_state;
+                        }
+                        if (caflag == 1) {
+                            ca = rechange_ca;
+                            ta1 = y + hr + ca + total_state;
+                        }
+
                         // alert(ta1 * 12);
                         var y_12 = y;
                         var total_y_12 = 0;
@@ -299,7 +313,15 @@
                         y = rechange_y;
                         hr = y / 2;
                         ca = 1600;
-                        ta1 = y + hr + ca + total_state;
+
+                        if (caflag == 0) {
+                            ta1 = y + hr + ca + total_state;
+                        }
+                        if (caflag == 1) {
+                            ca = rechange_ca;
+                            ta1 = y + hr + ca + total_state;
+                        }
+
                         // alert(ta1 * 12);
                         var y_121 = y;
                         var total_y_121 = 0;
@@ -450,7 +472,13 @@
                         y = rechange_y;
                         hr = y / 2;
                         ca = 1600;
-                        ta1 = y + hr + ca + total_state + e;
+                        if (caflag == 0) {
+                            ta1 = y + hr + ca + total_state;
+                        }
+                        if (caflag == 1) {
+                            ca = rechange_ca;
+                            ta1 = y + hr + ca + total_state;
+                        }
                         // alert(ta1 * 12);
                         var y_12 = y;
                         var total_y_12 = 0;
